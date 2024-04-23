@@ -1,28 +1,63 @@
-FROM node:latest as build
+# base node image
+FROM node:18-bullseye-slim as base
 
-# Define o diretório de trabalho no contêiner
-WORKDIR /app
+# Install pnpm
+RUN npm i -g pnpm
 
-# Copia os arquivos de dependência do projeto
-COPY package.json package-lock.json ./
+# set for base and all layer that inherit from it
+ENV NODE_ENV production
 
-# Instala as dependências
-RUN npm install
+# Install openssl for Prisma
+RUN apt-get update && apt-get install -y openssl
 
-# Copia os arquivos do projeto para o diretório de trabalho
-COPY . .
+# Install all node_modules, including dev dependencies
+FROM base as deps
 
-# Compila o código React para produção
-RUN npm run build
+WORKDIR /myapp
 
-# Estágio de produção
-FROM nginx:alpine
+ADD package.json pnpm-lock.yaml ./
+# Instruct pnpm to install all dependencies, regardless of NODE_ENV
+RUN pnpm i --frozen-lockfile --prod=false
 
-# Copia os arquivos compilados do estágio de compilação para o diretório padrão do servidor nginx
-COPY --from=build /app/build /usr/share/nginx/html
+# Setup production node_modules
+FROM base as production-deps
 
-# Exponha a porta 3000 para tráfego HTTP
-EXPOSE 3000
+WORKDIR /myapp
 
-# Comando para iniciar o servidor nginx em execução no segundo plano
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=deps /myapp/node_modules /myapp/node_modules
+ADD package.json pnpm-lock.yaml ./
+RUN pnpm prune --prod
+
+# Build the app
+FROM base as build
+
+WORKDIR /myapp
+
+COPY --from=deps /myapp/node_modules /myapp/node_modules
+
+
+ADD . .
+# RUN npm run postinstall
+RUN pnpm build
+
+# Run migrations
+ARG DATABASE_URL
+RUN pnpm deploy:db
+
+# Finally, build the production image with minimal footprint
+FROM base
+
+WORKDIR /myapp
+
+COPY --from=production-deps /myapp/node_modules /myapp/node_modules
+COPY --from=build /myapp/build /myapp/build
+COPY --from=build /myapp/public /myapp/public
+
+ADD . .
+
+
+# If you would like to explicitly set a port: https://docs.railway.app/guides/public-networking#user-defined-port
+# ENV PORT 8080
+# EXPOSE 8080
+
+CMD ["pnpm", "start"]
