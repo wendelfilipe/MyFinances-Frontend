@@ -21,8 +21,8 @@ FROM nginx:alpine
 # Copia os arquivos compilados do estágio de compilação para o diretório padrão do servidor nginx
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Exponha a porta 80 para tráfego HTTP
-EXPOSE 80
+# Exponha a porta 3000 para tráfego HTTP
+EXPOSE 3000
 
 # Comando para iniciar o servidor nginx em execução no segundo plano
 CMD ["nginx", "-g", "daemon off;"]
