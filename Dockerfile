@@ -1,61 +1,13 @@
-# base node image
-FROM node:18-bullseye-slim as base
+# Production stage
+FROM node:16-alpine as build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-# Install pnpm
-RUN npm i -g pnpm
-
-# set for base and all layer that inherit from it
-ENV NODE_ENV production
-
-# Install openssl for Prisma
-RUN apt-get update && apt-get install -y openssl
-
-# Install all node_modules, including dev dependencies
-FROM base as deps
-
-WORKDIR /myapp
-
-# Instruct pnpm to install all dependencies, regardless of NODE_ENV
-RUN pnpm i --frozen-lockfile --prod=false
-
-# Setup production node_modules
-FROM base as production-deps
-
-WORKDIR /myapp
-
-COPY --from=deps /myapp/node_modules /myapp/node_modules
-RUN pnpm prune --prod
-
-# Build the app
-FROM base as build
-
-WORKDIR /myapp
-
-COPY --from=deps /myapp/node_modules /myapp/node_modules
-
-
-ADD . .
-# RUN npm run postinstall
-RUN pnpm build
-
-# Run migrations
-ARG DATABASE_URL
-RUN pnpm deploy:db
-
-# Finally, build the production image with minimal footprint
-FROM base
-
-WORKDIR /myapp
-
-COPY --from=production-deps /myapp/node_modules /myapp/node_modules
-COPY --from=build /myapp/build /myapp/build
-COPY --from=build /myapp/public /myapp/public
-
-ADD . .
-
-
-# If you would like to explicitly set a port: https://docs.railway.app/guides/public-networking#user-defined-port
-# ENV PORT 8080
-# EXPOSE 8080
-
-CMD ["pnpm", "start"]
+# Runtime stage
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]
