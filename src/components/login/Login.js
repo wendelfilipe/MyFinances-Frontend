@@ -16,6 +16,7 @@ const Login = () => {
 
 
     return (
+        <form>
             <div className="mt-3 d-flex justify-content-center align-items-center">
                 <div className="col-md-6">
                     <div className="mb-3">
@@ -60,6 +61,15 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <div className="Container">
+                <div class="card fixed-bottom w-100 bg-primary text-white p-3" style={{width: "18rem"}}>
+                    <div class="card-header">v0.0.1</div>
+                    <div class="card-body">
+                        <p class="card-text">Web Api ainda sendo construida</p>
+                    </div>
+                </div>
+            </div>
+        </form>
     );
 };
 export default Login;
