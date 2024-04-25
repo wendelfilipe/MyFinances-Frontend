@@ -11,11 +11,11 @@ const LoginPage = () => {
     
     async function handleClickLogin(){
         await api.get(`user/${email}`)
-        navigate('/home')
+        navigate('/homepage')
     }
 
     async function handleClickCreateUser(){
-        navigate('/createuser')
+        navigate('/createuserpage')
     }
 
 
