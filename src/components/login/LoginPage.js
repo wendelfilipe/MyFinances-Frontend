@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import api  from '../../api/Api'
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
 
     
-    async function handleClick(){
+    async function handleClickLogin(){
         await api.get(`user/${email}`)
         navigate('/home')
+    }
+
+    async function handleClickCreateUser(){
+        navigate('/createuser')
     }
 
 
@@ -25,13 +29,14 @@ const Login = () => {
                                 Email
                         </label>
                         <input
-                            type="text" 
-                            value = {email} 
+                            type="text"  
                             onChange={(e => setEmail(e.target.value))} 
                             id="email" 
                             name="email" 
                             className="form-control mt-2" 
-                            placeholder="Email" />
+                            placeholder="Email" 
+                            value = {email}
+                        />
                     </div>
                     <div className="mb-3">
                         <label 
@@ -51,18 +56,19 @@ const Login = () => {
                     <div className="col-12">
                         <button 
                             className="btn btn-outline-success me-2" 
-                            onClick={handleClick}>
+                            onClick={handleClickLogin}>
                                 Login
                         </button>
                         <button 
-                            className="btn btn-outline-success">
+                            className="btn btn-outline-success"
+                            onClick={handleClickCreateUser}>
                                 Criar Usuario
                         </button>
                     </div>
                 </div>
             </div>
             <div className="Container">
-                <div class="card fixed-bottom w-100 bg-primary text-white p-3" style={{width: "18rem"}}>
+                <div class="card fixed-bottom w-100 bg-primary text-white p-3">
                     <div class="card-header">v0.0.1</div>
                     <div class="card-body">
                         <p class="card-text">Web Api ainda sendo construida</p>
@@ -72,4 +78,4 @@ const Login = () => {
         </form>
     );
 };
-export default Login;
+export default LoginPage;

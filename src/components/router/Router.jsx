@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Login from '../login/Login';
-import Home from '../home/Home';
-import CreateUser from '../login/CreateUser';
+import LoginPage from '../login/LoginPage';
+import HomePage from '../home/HomePage';
+import CreateUserPage from '../login/CreateUserPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
@@ -11,15 +11,15 @@ const RouterComponent = () => {
     <Routes>
         <Route 
             path="/" 
-            element={<Login />} 
+            element={<LoginPage />} 
         />
         <Route 
-            path="/home" 
-            element={<Home />} 
+            path="/homepage" 
+            element={<HomePage />} 
         />
         <Route
-            path='/creteuser'
-            element={<CreateUser />}
+            path='/createuserpage'
+            element={<CreateUserPage />}
         />
     </Routes>
   );
