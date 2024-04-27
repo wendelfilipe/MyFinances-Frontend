@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../../api/Api";
+import NavBarForm from "../forms/navBar/NavBarForm";
 
 const HomePage = () => {
     const name = "Wallet";
@@ -12,8 +13,8 @@ const HomePage = () => {
     
 
     return (
-        <div className="Conteiner">
-            <div className="mt-5 d-flex justify-content-center"><h2>Carteiras</h2></div>
+        <div className="conteiner">
+            <div className="d-flex justify-content-center"><h2>Carteiras</h2></div>
             <div className="card mt-5 text-decoration-none" style={{ width: "18rem"}}>
             <a className="text-decoration-none" href="/">
             <h5 className="card-header" >{name}</h5>
