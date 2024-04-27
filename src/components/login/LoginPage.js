@@ -21,7 +21,7 @@ const LoginPage = () => {
 
     return (
         <form>
-            <div className="mt-3 d-flex justify-content-center align-items-center">
+            <div className="d-flex justify-content-center align-items-center">
                 <div className="col-md-6">
                     <div className="mb-3">
                         <label
@@ -64,14 +64,6 @@ const LoginPage = () => {
                             onClick={handleClickCreateUser}>
                                 Criar Usuario
                         </button>
-                    </div>
-                </div>
-            </div>
-            <div className="Container">
-                <div class="card fixed-bottom w-100 bg-primary text-white p-3">
-                    <div class="card-header">v0.0.1</div>
-                    <div class="card-body">
-                        <p class="card-text">Web Api ainda sendo construida</p>
                     </div>
                 </div>
             </div>
