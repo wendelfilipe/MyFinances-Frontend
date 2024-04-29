@@ -31,6 +31,10 @@ ReactDom.createRoot(document.getElementById('root')).render(
           <Index />
         </div>
         <di>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8115306861951387"
+        crossorigin="anonymous"></script>
+        </di>
+        <di>
           <VersionForm />
         </di>
       </div>
