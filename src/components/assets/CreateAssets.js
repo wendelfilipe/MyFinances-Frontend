@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import apiAssets from "../../../api/Api";
 
-const CreateWallet = () => {
+const CreateAssets = () => {
     const [ assetsName, setAssetsName ] = useState([]);
     const [ assetsSymbol, setAssetsSymbol ] =useState([]); 
     let isClicked;
@@ -39,7 +38,7 @@ const CreateWallet = () => {
             </div>
             <div>
                 <a className="btn btn-outline-success">Buscar</a>
-                <a className="btn btn-outline-success">Cancelar</a>
+                <a className="btn btn-outline-success" href="/homepage">Cancelar</a>
             </div>
         </div>
 
@@ -47,4 +46,4 @@ const CreateWallet = () => {
 
 }
 
-export default CreateWallet;
+export default CreateAssets;

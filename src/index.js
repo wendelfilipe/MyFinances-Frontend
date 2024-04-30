@@ -13,7 +13,10 @@ const Index = () => {
       <BrowserRouter>
         <div className="container">
           <RouterComponent />
-        </div>                                             
+        </div>
+        <div className="col">
+            <NavBarForm />
+        </div>                                   
       </BrowserRouter>
   );
 };
@@ -21,11 +24,6 @@ const Index = () => {
 ReactDom.createRoot(document.getElementById('root')).render(
 <div className="container">
       <div className="row">
-        <div className="col">
-          <BrowserRouter>
-            <NavBarForm />
-          </BrowserRouter>
-        </div>
       </div>
       <div className="container" style={{width: 25, height:25}}></div>
       <div className="row mt-5">
@@ -33,5 +31,5 @@ ReactDom.createRoot(document.getElementById('root')).render(
           <Index />
         </div>
       </div>
-    </div>
+</div>
 );
