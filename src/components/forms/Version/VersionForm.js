@@ -6,10 +6,10 @@ const VersionForm = () => {
 
     return(
         <div className="Container">
-                <div class="card fixed-bottom w-100 bg-dark text-white p-3">
-                    <div class="card-header">v0.0.1</div>
-                    <div class="card-body">
-                        <p class="card-text">Web Api ainda sendo construida</p>
+                <div className="card fixed-bottom w-100 bg-dark text-white p-3">
+                    <div className="card-header">v0.0.1</div>
+                    <div className="card-body">
+                        <p className="card-text">Web Api ainda sendo construida</p>
                     </div>
                 </div>
         </div>
