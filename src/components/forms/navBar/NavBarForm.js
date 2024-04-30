@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import api from "../../../api/Api";
+import { useNavigate } from "react-router-dom";
+
 
 const NavBarForm = () => {
 
-    async function handleClickLogOut(){
-        const isClicked = true;
+    const navigate = useNavigate();
+    const [ checked, setChecked ]  = useState(false); 
+
+    async function handleClickLogOut(e){
+
+        await api.post("user/PostClickedOnLogOutAsync")
+        navigate("/")
     }
+
+    
 
     return(
         <form>
@@ -16,7 +25,7 @@ const NavBarForm = () => {
                 <button className="navbar-toggler bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title" id="offcanvasNavbarLabel">My Finances App</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>

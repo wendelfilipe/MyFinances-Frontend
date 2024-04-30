@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import api  from '../../api/Api'
 import { useNavigate } from 'react-router-dom';
+import VersionForm from '../forms/Version/VersionForm';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -9,9 +10,24 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     
-    async function handleClickLogin(){
-        await api.get(`user/${email}`)
-        navigate('/homepage')
+    async function handleClickLogin(e){
+        e.preventDefault();
+
+        if(email ===''){
+            alert("Email é obrigatótio")
+        }
+        if(password ===''){
+            alert("Senha é obrigatório")
+        }
+        else{
+            const user = await api.get(`user/GetUserDTOByEmailAsync/${email}`)
+            if(email === user.data.email && password === user.data.password){
+               navigate("/homepage")
+            }
+            else{
+                alert("Email ou senha invalida")
+            }
+        }
     }
 
     async function handleClickCreateUser(){
@@ -36,6 +52,7 @@ const LoginPage = () => {
                             className="form-control mt-2" 
                             placeholder="Email" 
                             value = {email}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -51,6 +68,7 @@ const LoginPage = () => {
                             name="password" 
                             className="form-control mt-2" 
                             placeholder="Password"
+                            required
                         />
                     </div>
                     <div className="col-12">
@@ -66,6 +84,9 @@ const LoginPage = () => {
                         </button>
                     </div>
                 </div>
+            </div>
+            <div>
+                <VersionForm />
             </div>
         </form>
     );
