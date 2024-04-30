@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import api  from '../../api/Api'
 import { useNavigate } from 'react-router-dom';
 import VersionForm from '../forms/Version/VersionForm';
+import cryptoJs from 'crypto-js';
+import RouterComponent from '../router/Router';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -22,10 +24,16 @@ const LoginPage = () => {
         else{
             const user = await api.get(`user/GetUserDTOByEmailAsync/${email}`)
             if(email === user.data.email && password === user.data.password){
-               navigate("/homepage")
+
+                let dataDeExpiracao = new Date();
+                dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
+                document.cookie = `UserIdCookie=${user.data.id};expires=${dataDeExpiracao}`;
+
+                await props.onLogin();
+                navigate("/homepage");
             }
             else{
-                alert("Email ou senha invalida")
+                alert("Email ou senha invalida");
             }
         }
     }

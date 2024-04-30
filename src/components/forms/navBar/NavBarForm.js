@@ -2,20 +2,26 @@ import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import api from "../../../api/Api";
 import { useNavigate } from "react-router-dom";
+import RouterComponent from "../../router/Router";
 
 
-const NavBarForm = () => {
+const NavBarForm = ({onLogout}) => {
+    const [isLoggedIn, setIsLoggedIn] = useState();
+
+       // Função para lidar com o logout
+   const handleLogout = () => {
+    setIsLoggedIn(false);
+};
 
     const navigate = useNavigate();
     const [ checked, setChecked ]  = useState(false); 
 
-    async function handleClickLogOut(e){
-
-        await api.post("user/PostClickedOnLogOutAsync")
-        navigate("/")
+    async function handleClickLogOut(){
+        document.cookie = 'UserIdCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        handleLogout();
+        <RouterComponent 
+            onLogout={isLoggedIn}/>
     }
-
-    
 
     return(
         <form>

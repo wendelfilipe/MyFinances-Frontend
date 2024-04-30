@@ -1,43 +1,42 @@
-import React from 'react';
-import { Routes, Route, useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Routes, Route, useNavigate, Navigate} from 'react-router-dom';
 import LoginPage from '../login/LoginPage';
 import HomePage from '../home/HomePage';
 import CreateUserPage from '../login/CreateUserPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import WalletHome from '../home/walletHome/WalletHome';
-import CreateWallet from '../forms/wallet/CreateWallet';
+import CreateWallet from '../wallet/CreateWallet';
 
 const RouterComponent = () => {
-    const navigate = useNavigate();
-    
-    async function navigatePage(){
-        return navigate;
-    }
+    const [isLoggedIn, setIsLoggedIn] = useState();
+
+    // Componente de rota protegida
+    async function handleLogin(){
+        setIsLoggedIn(true);
+    };
 
   return (
     <Routes>
         <Route 
             path="/" 
-            element={<LoginPage 
-                    navigatePage = {navigatePage}
-            />} 
-        />
-        <Route 
-            path="/homepage" 
-            element={<HomePage />} 
+            element={<LoginPage onLogin={handleLogin} />} 
         />
         <Route
             path='/createuserpage'
             element={<CreateUserPage />}
         />
-        <Route 
-            path='/wallethome'
-            element={<WalletHome />}
+        <Route
+                path="/homepage"
+                element={isLoggedIn ? <HomePage /> : <Navigate to="/" />}
+            />
+        <Route
+            path="/wallethome"
+            element={isLoggedIn ? <WalletHome /> : <Navigate to="/" />}
         />
         <Route
-            path='/createwallet'
-            element={<CreateWallet />}
+            path="/createwallet"
+            element={isLoggedIn ? <CreateWallet /> : <Navigate to="/" />}
         />
     </Routes>
   );
