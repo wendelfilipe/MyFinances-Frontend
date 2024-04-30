@@ -20,7 +20,7 @@ const HomePage = () => {
     const cookie = getCookies();
     const userIdString = cookie.UserIdCookie;
     const userId = parseInt(userIdString, 10);
-    debugger
+
 
     
     useEffect (() => {

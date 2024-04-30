@@ -19,7 +19,6 @@ const CreateAssets = () => {
         const assetsName = assets.map(asset => asset["2. name"]);
         const assetsSymbol = assets.map(asset => asset["1. symbol"]);
         setAssetsName(assetsName)
-        debugger
 
     }
 

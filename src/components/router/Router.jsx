@@ -9,7 +9,7 @@ import WalletHome from '../home/walletHome/WalletHome';
 import CreateWallet from '../wallet/CreateWallet';
 
 const RouterComponent = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState();
+    const [isLoggedIn, setIsLoggedIn] = useState([]);
 
     // Componente de rota protegida
     async function handleLogin(){
