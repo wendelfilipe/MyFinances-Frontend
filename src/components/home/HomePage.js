@@ -30,7 +30,11 @@ const HomePage = () => {
 
     async function getWallets(){
         wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
+        setWallets(wallets.data)
+    }
     
+    async function getAssets(){
+        assets = await api.get(`assets/GetAllAssetsDTOAsync/${walletId}`)
     }
 
 
@@ -58,6 +62,7 @@ const HomePage = () => {
                 <h5 className="card-header" >walletName</h5>
                     <div className="card-body">
                         <div>
+                            <WalletForm />
                         </div>                        
                     </div>
                 </div>

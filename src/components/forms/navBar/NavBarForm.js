@@ -5,22 +5,13 @@ import { useNavigate } from "react-router-dom";
 import RouterComponent from "../../router/Router";
 
 
-const NavBarForm = ({onLogout}) => {
-    const [isLoggedIn, setIsLoggedIn] = useState();
-
-       // Função para lidar com o logout
-   const handleLogout = () => {
-    setIsLoggedIn(false);
-};
-
-    const navigate = useNavigate();
-    const [ checked, setChecked ]  = useState(false); 
+const NavBarForm = (propsRoute) => {
+    
 
     async function handleClickLogOut(){
         document.cookie = 'UserIdCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        handleLogout();
-        <RouterComponent 
-            onLogout={isLoggedIn}/>
+        propsRoute.onLogout();
+        
     }
 
     return(

@@ -17,7 +17,7 @@ const WalletForm = (props) => {
                     <p className="card-text"></p>
                     <a className="text-decoration-none" href="/acoes">
                         <i className="fa-solid fa-wallet"></i>
-                        <p className="card-text ms-2 ts-sm d-inline-block me-1">{props.AssetsName}</p>
+                        <p className="card-text ms-2 ts-sm d-inline-block me-1">{name}</p>
                     </a>
                     </div>
                     <div className="progress-stacked">
