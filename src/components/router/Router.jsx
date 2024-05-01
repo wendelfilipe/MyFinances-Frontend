@@ -21,7 +21,7 @@ const RouterComponent = (propsRoute) => {
     };
 
     // Componente de rota protegida
-    async function handleLogin(){
+    const handleLogin = () => {
         setIsLoggedIn(true);
         localStorage.setItem("isLoggedIn", "true");
     };
