@@ -11,10 +11,9 @@ import NavBarForm from '../forms/navBar/NavBarForm';
 
 
 const RouterComponent = (propsRoute) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(true)
-    // const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    //     return localStorage.getItem("isLoggedIn") === "true";
-    // });
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return localStorage.getItem("isLoggedIn") === "true";
+    });
 
     const handleLogout = () => {
         setIsLoggedIn(false);
