@@ -5,6 +5,10 @@ const WalletForm = (props) => {
     const name = "Wallet";
     const  [ process, setProcess ]  = useState(25);
 
+    function walletIdCookie(){
+
+    
+    }
 
 
     return(
@@ -15,7 +19,7 @@ const WalletForm = (props) => {
                     <div className="card-body">
                     <h5 className="card-title"></h5>
                     <p className="card-text"></p>
-                    <a className="text-decoration-none" href="/acoes">
+                    <a className="text-decoration-none" href="/createassets" onClick={walletIdCookie}>
                         <i className="fa-solid fa-wallet"></i>
                         <p className="card-text ms-2 ts-sm d-inline-block me-1">{name}</p>
                     </a>

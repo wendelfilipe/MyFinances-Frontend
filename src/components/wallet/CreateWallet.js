@@ -20,11 +20,9 @@ const CreateWallet = () => {
     const userId = parseInt(userIdString, 10);
 
     async function getUserIdAndCriarWallet(){
-        const user = await api.get(`user/GetUserDTOByIdAsync/${userId}`)
         const wallet = {
             "name": name,
-            "userid": userId,
-            "user": user
+            "userid": userId
         }
         await api.post("wallet/PostWalletDTOAsync", wallet)
     }

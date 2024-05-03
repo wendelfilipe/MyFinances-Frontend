@@ -5,6 +5,7 @@ import WalletForm from "../forms/wallet/WalletForm";
 
 const HomePage = () => {
     let [wallets, setWallets ] = useState([]);
+    let [assets, setAssets ] = useState([]);
 
 
     function getCookies() {
@@ -20,7 +21,8 @@ const HomePage = () => {
     const cookie = getCookies();
     const userIdString = cookie.UserIdCookie;
     const userId = parseInt(userIdString, 10);
-
+    const walletIdString = cookie.WalletIdCookie;
+    const walletId = parseInt(walletIdString, 10);
 
     
     useEffect (() => {
@@ -31,6 +33,10 @@ const HomePage = () => {
     async function getWallets(){
         wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
         setWallets(wallets.data)
+        let dataDeExpiracao = new Date();
+        let walletId = wallets.data[0].id;
+        dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
+        document.cookie = `WalletIdCookie=${walletId};expires=${dataDeExpiracao}`;
     }
     
     async function getAssets(){

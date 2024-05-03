@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import WalletHome from '../home/walletHome/WalletHome';
 import CreateWallet from '../wallet/CreateWallet';
 import NavBarForm from '../forms/navBar/NavBarForm';
+import CreateAssets from '../assets/CreateAssets';
 
 
 const RouterComponent = (propsRoute) => {
@@ -48,6 +49,10 @@ const RouterComponent = (propsRoute) => {
         <Route
             path="/createwallet"
             element={isLoggedIn ? <CreateWallet /> : <Navigate to="/" />}
+        />
+         <Route
+            path="/createassets"
+            element={isLoggedIn ? <CreateAssets /> : <Navigate to="/" />}
         />
         </Routes>
         <NavBarForm 
