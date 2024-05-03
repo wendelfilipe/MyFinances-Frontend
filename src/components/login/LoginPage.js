@@ -50,7 +50,7 @@ const LoginPage = (propsRoute) => {
                     <div className="mb-3">
                         <label
                             htmlFor="email">
-                                Email
+                                Email*
                         </label>
                         <input
                             type="text"  
@@ -66,7 +66,7 @@ const LoginPage = (propsRoute) => {
                     <div className="mb-3">
                         <label 
                             htmlFor="password">
-                                Password
+                                Password*
                         </label>
                         <input 
                             type="password" 

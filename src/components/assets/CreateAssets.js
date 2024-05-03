@@ -35,7 +35,7 @@ const CreateAssets = () => {
     return (
     <div className="d-flex justify-content-center">
         <div>
-            <label for="exampleDataList" className="form-label">Buscar ações</label>
+            <label htmlFor="stocks" className="form-label">Buscar ações</label>
             <input 
                 className="form-control" 
                 value={searchAssets} 

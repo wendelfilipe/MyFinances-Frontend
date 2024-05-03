@@ -7,21 +7,15 @@ const HomePage = () => {
     let [wallets, setWallets ] = useState([]);
     let [assets, setAssets ] = useState([]);
 
-
-    function getCookies() {
-        const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
-            const [name, value] = cookie.split('=').map(cookie => cookie.trim());
-            cookies[name] = value;
-            return cookies;
-        }, {});
+    const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
+        const [name, value] = cookie.split('=').map(cookie => cookie.trim());
+        cookies[name] = value;
         return cookies;
-    }
-    
-    // Exemplo de como usar a função getCookies()
-    const cookie = getCookies();
-    const userIdString = cookie.UserIdCookie;
+    }, {});
+   
+    const userIdString = cookies.UserIdCookie;
     const userId = parseInt(userIdString, 10);
-    const walletIdString = cookie.WalletIdCookie;
+    const walletIdString = cookies.WalletIdCookie;
     const walletId = parseInt(walletIdString, 10);
 
     
@@ -33,39 +27,32 @@ const HomePage = () => {
     async function getWallets(){
         wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
         setWallets(wallets.data)
-        let dataDeExpiracao = new Date();
-        let walletId = wallets.data[0].id;
-        dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
-        document.cookie = `WalletIdCookie=${walletId};expires=${dataDeExpiracao}`;
     }
-    
-    async function getAssets(){
-        assets = await api.get(`assets/GetAllAssetsDTOAsync/${walletId}`)
-    }
-
 
     if(wallets.length === 0){
 
         return (
-
             <div className="container">
                 <div className=""><h5>Você não tem uma carteira</h5></div>
                 <div>
                     <a className="btn btn-outline-success" href="/createwallet">Criar Carteira</a>
                 </div>
             </div>
-            
-
         )
     }
     else{
 
+        let dataDeExpiracao = new Date();
+        let walletId = wallets[0].id;
+        let walletName = wallets[0].name;
+        dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
+        document.cookie = `WalletIdCookie=${walletId};expires=${dataDeExpiracao}`;
 
         return (
             <div className="conteiner">
                 <div className="d-flex justify-content-center"><h2>Carteiras</h2></div>
                 <div className="card text-decoration-none" style={{ width: "20rem"}}>
-                <h5 className="card-header" >walletName</h5>
+                <h5 className="card-header" >{walletName}</h5>
                     <div className="card-body">
                         <div>
                             <WalletForm />

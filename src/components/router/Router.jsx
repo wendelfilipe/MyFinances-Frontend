@@ -3,12 +3,13 @@ import { Routes, Route, useNavigate, Navigate} from 'react-router-dom';
 import LoginPage from '../login/LoginPage';
 import HomePage from '../home/HomePage';
 import CreateUserPage from '../login/CreateUserPage';
-
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import WalletHome from '../home/walletHome/WalletHome';
 import CreateWallet from '../wallet/CreateWallet';
 import NavBarForm from '../forms/navBar/NavBarForm';
 import CreateAssets from '../assets/CreateAssets';
+import AssetsHomeForm from '../forms/assets/AssetsHomeForm';
+import AssetsHome from '../assets/AssetsHome';
 
 
 const RouterComponent = (propsRoute) => {
@@ -53,6 +54,14 @@ const RouterComponent = (propsRoute) => {
          <Route
             path="/createassets"
             element={isLoggedIn ? <CreateAssets /> : <Navigate to="/" />}
+        />
+        <Route
+            path='/assetshome'
+            element={<AssetsHome />}
+        />
+        <Route
+            path='/assetshomeform'
+            element={<AssetsHomeForm />}
         />
         </Routes>
         <NavBarForm 

@@ -21,8 +21,10 @@ const CreateWallet = () => {
 
     async function getUserIdAndCriarWallet(){
         const wallet = {
-            "name": name,
-            "userid": userId
+            name: name,
+            userid: userId,
+            sourcecreate: 1 
+
         }
         await api.post("wallet/PostWalletDTOAsync", wallet)
     }
