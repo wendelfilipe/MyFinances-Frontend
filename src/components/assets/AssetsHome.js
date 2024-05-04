@@ -1,21 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AssetsHomeForm from "../forms/assets/AssetsHomeForm";
+import api from "../../api/Api";
 
 const AssetsHome = () => {
+    let [ assets, setAssets ] = useState([]);
 
-    // async function getAssets(){
-    //     assets = await api.get(`assets/GetAllAssetsDTOAsync/${walletId}`)
-    // }
+    const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
+        const [name, value] = cookie.split('=').map(cookie => cookie.trim());
+        cookies[name] = value;
+        return cookies;
+    }, {});
+
+    const walletIdString = cookies.WalletIdCookie;
+    const walletId = parseInt(walletIdString, 10);
+
+    useEffect(() => {
+        getAssets();
+    }, []);
+
+    async function getAssets(){
+        assets = await api.get(`assets/GetAllAssetsDTOAsync/${walletId}`)
+        setAssets(assets.data)
+        debugger
+    }
 
     return(
         <div>
-            <div class="card">
-                <div class="card-header">
+            <div className="card">
+                <div className="card-header">
                     Açoes
                 </div>
-                <div class="card-body">
-                    <AssetsHomeForm />
-
+                <div className="card-body">
+                    <AssetsHomeForm 
+                        setToForm={assets}
+                    />
                 </div>
             </div>
         </div>

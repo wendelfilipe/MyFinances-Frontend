@@ -1,15 +1,14 @@
 import React from "react";
 
-const AssetsHomeForm = () => {
-
-
+const AssetsHomeForm = (props) => {
+    let assets = props.setToForm;
+    debugger
     return (
-        <div class="card">
-        <div class="card-header">
-            
+        <div className="card">
+        <div className="card-header">
         </div>
-        <div class="card-body">
-            <h5 class="card-title"></h5>
+        <div className="card-body">
+            <h5 className="card-title">propriedades da ação</h5>
         </div>
     </div>
     )

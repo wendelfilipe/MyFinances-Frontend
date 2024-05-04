@@ -15,8 +15,6 @@ const HomePage = () => {
    
     const userIdString = cookies.UserIdCookie;
     const userId = parseInt(userIdString, 10);
-    const walletIdString = cookies.WalletIdCookie;
-    const walletId = parseInt(walletIdString, 10);
 
     
     useEffect (() => {
@@ -55,7 +53,9 @@ const HomePage = () => {
                 <h5 className="card-header" >{walletName}</h5>
                     <div className="card-body">
                         <div>
-                            <WalletForm />
+                            <WalletForm 
+                                nameAssets={"Ações"}
+                            />
                         </div>                        
                     </div>
                 </div>
