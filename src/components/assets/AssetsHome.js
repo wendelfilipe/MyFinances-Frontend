@@ -34,6 +34,7 @@ const AssetsHome = () => {
                     <AssetsHomeForm 
                         setToForm={assets}
                     />
+                    <a className="text-decoration-none btn btn-outline-success" href="/createassets">Adicionar Ação</a>
                 </div>
             </div>
         </div>

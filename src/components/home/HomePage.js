@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/Api";
 import NavBarForm from "../forms/navBar/NavBarForm";
 import WalletForm from "../forms/wallet/WalletForm";
+import { Col, Container, Row } from "react-bootstrap";
 
 const HomePage = () => {
     let [wallets, setWallets ] = useState([]);
     let [assets, setAssets ] = useState([]);
+    const urlStocks = "stocks/GetPerCentStocksByWalletId/"
+    const urlFiis = "fiis/GetPerCentFiisByWalletId/"
+    const urlInterAssets = "internacionalAssets/GetPerCentInternacionalAssetsByWalletId/"
+    const urlFixed = "fixed/GetPerCentFixedsByWalletId/"
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -52,11 +57,34 @@ const HomePage = () => {
                 <div className="card text-decoration-none" style={{ width: "20rem"}}>
                 <h5 className="card-header" >{walletName}</h5>
                     <div className="card-body">
-                        <div>
-                            <WalletForm 
-                                nameAssets={"Ações"}
-                            />
-                        </div>                        
+                        <Container>
+                            <Row>
+                                <Col>
+                                    <div >
+                                        <WalletForm 
+                                            nameAssets={"Ações"}
+                                            urlName={urlStocks}
+                                        />
+                                        <WalletForm 
+                                            nameAssets={"Fundos imobiliários"}
+                                            urlName={urlFiis}
+                                        />
+                                    </div>
+                                </Col>
+                                <Col>
+                                    <div>
+                                        <WalletForm 
+                                            nameAssets={"Renda Fixa"}
+                                            urlName={urlFixed}
+                                        />
+                                        <WalletForm 
+                                            nameAssets={"Ativos Internacionais"}
+                                            urlName={urlInterAssets}
+                                        />
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Container>                                 
                     </div>
                 </div>
             </div>

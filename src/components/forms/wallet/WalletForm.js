@@ -4,11 +4,11 @@ import api from "../../../api/Api";
 import AssetsHome from "../../assets/AssetsHome";
 
 const WalletForm = (props) => {
-    let [ process, setProcess ]  = useState(0);
-    let [ assetsData, setAssetsData ] = useState([]);
-    const [totalAssets, setTotalAssets ] = useState(0)
-    debugger
-    let [ perCent, setPerCent ] = useState(0);
+    let [ perCent, setPerCent ] = useState(() => {
+        const hasPerCent = localStorage.getItem("perCent");
+        return hasPerCent !== null ? parseInt(hasPerCent) : 0;
+    });
+    let url = props.urlName
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -21,9 +21,8 @@ const WalletForm = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await getAssets();
+            await getPerCent();
 
-            await sumAllAssets();
         };
 
         fetchData();
@@ -31,24 +30,11 @@ const WalletForm = (props) => {
 
 
 
-    async function getAssets(){
-        
-        const assets = await api.get(`assets/GetAllAssetsDTOAsync/${walletId}`)
-        const assetsData = assets.data;
-        setAssetsData(assetsData)
+    async function getPerCent(){
         debugger
-    }
-
-    async function sumAllAssets(){
-        await Promise.all(
-            assetsData.map(a => {
-                debugger
-                let totalEachAssets = a.amount * a.buyPrice;
-                totalAssets += totalEachAssets;
-            })
-        );
-        setTotalAssets(totalAssets);
-        setPerCent(totalAssets)
+        const reponse = await api.get(`${url}${walletId}`)
+        perCent = reponse.data;
+        setPerCent(perCent)
         debugger
     }
 

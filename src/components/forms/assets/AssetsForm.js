@@ -27,7 +27,7 @@ const AssetsForm = (props) =>{
             buyprice: buyPrice,
             walletid: walletId,
             sourcecreate: 1,
-            sourcetypeassets: 1, 
+            sourcetypeassets: 2, 
             amount: amount
 
         }
