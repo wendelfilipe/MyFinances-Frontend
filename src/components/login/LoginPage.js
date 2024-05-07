@@ -14,7 +14,7 @@ const LoginPage = (propsRoute) => {
     
     async function handleClickLogin(e){
         e.preventDefault();
-
+        
         if(email ===''){
             alert("Email é obrigatótio")
         }

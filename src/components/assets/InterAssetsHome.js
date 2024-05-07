@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import AssetsHomeForm from "../forms/assets/AssetsHomeForm";
 import api from "../../api/Api";
 
-const AssetsHome = () => {
-    let [ assets, setAssets ] = useState([]);
+const InterAssetsHome = () => {
+    let [ interAssets, setInterAssets ] = useState([]);
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -15,31 +15,38 @@ const AssetsHome = () => {
     const walletId = parseInt(walletIdString, 10);
 
     useEffect(() => {
-        getAssets();
+        const fetchData = async () => {
+
+            await getInterAssets();
+
+            await getPerCent();
+
+        };
+
+        fetchData();
     }, []);
 
-    async function getAssets(){
-        assets = await api.get(`assets/GetAllAssetsDTOAsync/${walletId}`)
-        setAssets(assets.data)
-        debugger
+    async function getInterAssets(){
+        interAssets = await api.get(`internationalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`)
+        setInterAssets(interAssets.data)
     }
 
     return(
         <div>
             <div className="card">
                 <div className="card-header">
-                    Açoes
+                    Ativos Internacionais
                 </div>
                 <div className="card-body">
                     <AssetsHomeForm 
-                        setToForm={assets}
+                        setToForm={interAssets}
                     />
-                    <a className="text-decoration-none btn btn-outline-success" href="/createassets">Adicionar Ação</a>
                 </div>
             </div>
+            <a className="text-decoration-none btn btn-outline-success" href="/createassets">Adicionar Ação</a>
         </div>
     )
 
 }
 
-export default AssetsHome;
+export default InterAssetsHome;

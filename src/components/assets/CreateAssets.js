@@ -27,7 +27,6 @@ const CreateAssets = () => {
         const latestDate = Object.keys(timesSeries)[0];
         const closePrice = timesSeries[latestDate]["4. close"];
         const closePriceFloat = parseFloat(closePrice);
-        debugger
         setClickedSearch(true)
         setClosePriceFloat(closePriceFloat)
     }

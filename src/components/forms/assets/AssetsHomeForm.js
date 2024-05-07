@@ -2,13 +2,19 @@ import React from "react";
 
 const AssetsHomeForm = (props) => {
     let assets = props.setToForm;
-    debugger
+    let perCent = props.setPerCent;
+
     return (
         <div className="card">
         <div className="card-header">
+            Código da Ação: {assets.name}
         </div>
         <div className="card-body">
-            <h5 className="card-title">propriedades da ação</h5>
+            <p className="card-title d-inline-block me-3">Preço atual: R$ {assets.currentPrice}</p>
+            <p className="card-title d-inline-block me-3">Preço pago: R$ {assets.buyPrice}</p>
+            <p className="card-title d-inline-block me-3">Quantidade: R$ {assets.Amout}</p>
+            <p className="card-title d-inline-block me-3">Preço medio: R$ {assets.AveregePrice}</p>
+            <p className="card-title d-inline-block me-3">Porcetagem: {perCent}%</p>
         </div>
     </div>
     )

@@ -31,7 +31,6 @@ const AssetsForm = (props) =>{
             amount: amount
 
         }
-        debugger
         await api.post("assets/PostCreateAssetAsync", asset)
     }
 

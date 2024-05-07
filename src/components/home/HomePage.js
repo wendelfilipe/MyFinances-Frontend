@@ -52,39 +52,49 @@ const HomePage = () => {
         document.cookie = `WalletIdCookie=${walletId};expires=${dataDeExpiracao}`;
 
         return (
-            <div className="conteiner">
-                <div className="d-flex justify-content-center"><h2>Carteiras</h2></div>
-                <div className="card text-decoration-none" style={{ width: "20rem"}}>
-                <h5 className="card-header" >{walletName}</h5>
+            <div className="container">
+                <div className="d-flex justify-content-center">
+                    <h2>Carteiras</h2>
+                </div>
+                <div className="card text-decoration-none" style={{ width: "100%" }}>
+                    <h5 className="card-header">{walletName}</h5>
                     <div className="card-body">
-                        <Container>
-                            <Row>
-                                <Col>
-                                    <div >
-                                        <WalletForm 
-                                            nameAssets={"Ações"}
-                                            urlName={urlStocks}
-                                        />
-                                        <WalletForm 
-                                            nameAssets={"Fundos imobiliários"}
-                                            urlName={urlFiis}
-                                        />
-                                    </div>
-                                </Col>
-                                <Col>
-                                    <div>
-                                        <WalletForm 
-                                            nameAssets={"Renda Fixa"}
-                                            urlName={urlFixed}
-                                        />
-                                        <WalletForm 
-                                            nameAssets={"Ativos Internacionais"}
-                                            urlName={urlInterAssets}
-                                        />
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Container>                                 
+                        <div className="row">
+                            <div className="col-md-6">
+                            <a className="text-decoration-none" href="/stockshome">
+                                <WalletForm 
+                                    nameAssets={"Ações"}
+                                    urlName={urlStocks}
+                                />
+                            </a>
+                            </div>
+                            <div className="col-md-6">
+                            <a className="text-decoration-none" href="/fiishome">
+                                <WalletForm 
+                                    nameAssets={"Fundos imobiliários"}
+                                    urlName={urlFiis}
+                                />
+                            </a>
+                            </div>
+                        </div>
+                        <div className="row mt-3">
+                            <div className="col-md-6">
+                            <a className="text-decoration-none" href="/fixedhome" >
+                                <WalletForm 
+                                    nameAssets={"Renda Fixa"}
+                                    urlName={urlFixed}
+                                />
+                            </a>
+                            </div>
+                            <div className="col-md-6">
+                            <a className="text-decoration-none" href="/interassetshome">
+                                <WalletForm 
+                                    nameAssets={"Ativos Internacionais"}
+                                    urlName={urlInterAssets}
+                                />
+                            </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

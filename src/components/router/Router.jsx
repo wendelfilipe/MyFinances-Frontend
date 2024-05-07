@@ -9,13 +9,13 @@ import CreateWallet from '../wallet/CreateWallet';
 import NavBarForm from '../forms/navBar/NavBarForm';
 import CreateAssets from '../assets/CreateAssets';
 import AssetsHomeForm from '../forms/assets/AssetsHomeForm';
-import AssetsHome from '../assets/AssetsHome';
+import StocksHome from '../assets/StocksHome';
 
 
 const RouterComponent = (propsRoute) => {
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
         return localStorage.getItem("isLoggedIn") === "true";
-    });
+    })
 
     const handleLogout = () => {
         setIsLoggedIn(false);
@@ -56,8 +56,8 @@ const RouterComponent = (propsRoute) => {
             element={isLoggedIn ? <CreateAssets /> : <Navigate to="/" />}
         />
         <Route
-            path='/assetshome'
-            element={<AssetsHome />}
+            path='/stockshome'
+            element={<StocksHome />}
         />
         <Route
             path='/assetshomeform'
