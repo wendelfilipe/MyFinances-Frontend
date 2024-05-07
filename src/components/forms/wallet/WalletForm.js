@@ -32,7 +32,6 @@ const WalletForm = (props) => {
 
     async function getPerCent(){
         const reponse = await api.get(`${url}${walletId}`)
-        debugger
         perCent = reponse.data;
         setPerCent(perCent)
     }

@@ -22,11 +22,8 @@ const FiisHome = () => {
         const fetchData = async () => {
 
             await getFiis();
-
             await getPerCent();
-
         };
-
         fetchData();
     }, []);
 
@@ -37,7 +34,6 @@ const FiisHome = () => {
 
     async function getPerCent(){
         const reponse = await api.get(`stocks/GetPerCentStocksByWalletId/${walletId}`)
-        debugger
         perCent = reponse.data;
         setPerCent(perCent)
     }
@@ -49,10 +45,15 @@ const FiisHome = () => {
                     Fundos Imobiliários
                 </div>
                 <div className="card-body">
-                    <AssetsHomeForm 
-                        setToForm={fiis}
-                        setPerCent={perCent}
-                    />
+                { fiis.length > 0
+                        ?   <AssetsHomeForm 
+                                setToForm={fiis}
+                                setPerCent={perCent}
+                            />
+                        :   <div>
+                                Adicione Ações
+                            </div>
+                    }
                 </div>
             </div>
             <a className="text-decoration-none btn btn-outline-success" href="/createassets">Adicionar Ação</a>

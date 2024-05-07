@@ -22,11 +22,8 @@ const StocksHome = () => {
         const fetchData = async () => {
 
             await getStocks();
-
             await getPerCent();
-
         };
-
         fetchData();
     }, []);
 
@@ -37,7 +34,6 @@ const StocksHome = () => {
 
     async function getPerCent(){
         const reponse = await api.get(`stocks/GetPerCentStocksByWalletId/${walletId}`)
-        debugger
         perCent = reponse.data;
         setPerCent(perCent)
     }
@@ -49,10 +45,15 @@ const StocksHome = () => {
                     Ações
                 </div>
                 <div className="card-body">
-                    <AssetsHomeForm 
-                        setToForm={stocks}
-                        setPerCent={perCent}
-                    />
+                    { stocks.length > 0
+                        ?   <AssetsHomeForm 
+                                setToForm={stocks}
+                                setPerCent={perCent}
+                            />
+                        :   <div>
+                                Adicione Ações
+                            </div>
+                    }
                 </div>
             </div>
             <a className="text-decoration-none btn btn-outline-success" href="/createassets">Adicionar Ação</a>

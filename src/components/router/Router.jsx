@@ -10,6 +10,9 @@ import NavBarForm from '../forms/navBar/NavBarForm';
 import CreateAssets from '../assets/CreateAssets';
 import AssetsHomeForm from '../forms/assets/AssetsHomeForm';
 import StocksHome from '../assets/StocksHome';
+import FiisHome from '../assets/FiisHome';
+import InterAssetsHome from '../assets/InterAssetsHome';
+import FixedHome from '../assets/FixedHome';
 
 
 const RouterComponent = (propsRoute) => {
@@ -58,6 +61,18 @@ const RouterComponent = (propsRoute) => {
         <Route
             path='/stockshome'
             element={<StocksHome />}
+        />
+        <Route
+            path='/fiishome'
+            element={<FiisHome />}
+        />
+        <Route
+            path='/interassetshome'
+            element={<InterAssetsHome />}
+        />
+        <Route
+            path='/fixedhome'
+            element={<FixedHome />}
         />
         <Route
             path='/assetshomeform'
