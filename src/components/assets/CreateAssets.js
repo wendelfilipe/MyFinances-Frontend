@@ -45,7 +45,7 @@ const CreateAssets = () => {
                     getAssetsByApi();}}/>
             <datalist id="datalistOptions">
                 {assets.map(an => (
-                   <option value={an["1. symbol"]} >{an["2. name"]}</option>
+                   <option key={an.id} value={an["1. symbol"]} >{an["2. name"]}</option>
                 ))}
             </datalist>
             <div>

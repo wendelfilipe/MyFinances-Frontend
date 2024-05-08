@@ -4,10 +4,6 @@ import api from "../../api/Api";
 
 const FixedHome = () => {
     let [ fixed, setFixed ] = useState([]);
-    let [ perCent, setPerCent ] = useState(() => {
-        const hasPerCent = localStorage.getItem("perCent");
-        return hasPerCent !== null ? parseInt(hasPerCent) : 0;
-    });
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -22,7 +18,6 @@ const FixedHome = () => {
         const fetchData = async () => {
 
             await getFixed();
-            await getPerCent();
         };
         fetchData();
     }, []);
@@ -30,12 +25,6 @@ const FixedHome = () => {
     async function getFixed(){
         fixed = await api.get(`fixed/GetAllFixedByWalletIdAsync/${walletId}`)
         setFixed(fixed.data)
-    }
-
-    async function getPerCent(){
-        const reponse = await api.get(`stocks/GetPerCentStocksByWalletId/${walletId}`)
-        perCent = reponse.data;
-        setPerCent(perCent)
     }
 
     return(
@@ -48,7 +37,6 @@ const FixedHome = () => {
                 { fixed.length > 0
                         ?   <AssetsHomeForm 
                                 setToForm={fixed}
-                                setPerCent={perCent}
                             />
                         :   <div>
                                 Adicione Ações

@@ -4,10 +4,6 @@ import api from "../../api/Api";
 
 const FiisHome = () => {
     let [ fiis, setFiis ] = useState([]);
-    let [ perCent, setPerCent ] = useState(() => {
-        const hasPerCent = localStorage.getItem("perCent");
-        return hasPerCent !== null ? parseInt(hasPerCent) : 0;
-    });
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -22,7 +18,6 @@ const FiisHome = () => {
         const fetchData = async () => {
 
             await getFiis();
-            await getPerCent();
         };
         fetchData();
     }, []);
@@ -31,13 +26,6 @@ const FiisHome = () => {
         fiis = await api.get(`fiis/GetAllFiisByWalletIdAsync/${walletId}`)
         setFiis(fiis.data)
     }
-
-    async function getPerCent(){
-        const reponse = await api.get(`stocks/GetPerCentStocksByWalletId/${walletId}`)
-        perCent = reponse.data;
-        setPerCent(perCent)
-    }
-
     return(
         <div>
             <div className="card">
@@ -48,7 +36,6 @@ const FiisHome = () => {
                 { fiis.length > 0
                         ?   <AssetsHomeForm 
                                 setToForm={fiis}
-                                setPerCent={perCent}
                             />
                         :   <div>
                                 Adicione Ações
