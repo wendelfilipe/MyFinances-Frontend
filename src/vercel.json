@@ -1,19 +1,26 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "./index.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "./index.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
+      {
+          "src": "./index.js",
+          "use": "@vercel/node"
       }
-    }
+  ],
+  "rewrites": [
+      { "source": "/(.*)", "destination": "src/index.js" }
+  ],
+  "headers": [
+      {
+        "source": "/(.*)",
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "*" }
+        ]
+      },
+      {
+        "source": "https://myfinancesapp.vercel.app/(.*)",
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "*" }
+        ]
+      }  
   ]
 }
