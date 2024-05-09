@@ -6,7 +6,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 const HomePage = () => {
     let [wallets, setWallets ] = useState([]);
-    let [assets, setAssets ] = useState([]);
+    let [patrimonyString, setPatrimonyString ] = useState("");
     const urlStocks = "stocks/GetPerCentStocksByWalletId/"
     const urlFiis = "fiis/GetPerCentFiisByWalletId/"
     const urlInterAssets = "internacionalAssets/GetPerCentInternacionalAssetsByWalletId/"
@@ -20,16 +20,30 @@ const HomePage = () => {
    
     const userIdString = cookies.UserIdCookie;
     const userId = parseInt(userIdString, 10);
+    const walletIdString = cookies.WalletIdCookie;
+    const walletId = parseInt(walletIdString, 10);
 
     
     useEffect (() => {
-        getWallets();
+        const fetchData = async () => {
+
+            await getWallets();
+            await getAssets();
+
+        }
+       fetchData();
      }, []);
 
 
     async function getWallets(){
         wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
         setWallets(wallets.data)
+    }
+
+    async function getAssets(){
+        let patrimony = await api.get(`assets/GetPatrimonyAsync/${walletId}`);
+        patrimonyString = patrimony.data.toFixed(2);
+        setPatrimonyString(patrimonyString);
     }
 
     if(wallets.length === 0){
@@ -57,7 +71,12 @@ const HomePage = () => {
                     <h2>Carteiras</h2>
                 </div>
                 <div className="card text-decoration-none" style={{ width: "100%" }}>
-                    <h5 className="card-header">{walletName}</h5>
+                    <h5 className="card-header d-flex justify-content-between align-items-center">
+                        {walletName}
+                        <span className="text-end">
+                            Patrimonio: R$ {patrimonyString}   
+                        </span>
+                    </h5>
                     <div className="card-body">
                         <div className="row">
                             <div className="col-md-6">

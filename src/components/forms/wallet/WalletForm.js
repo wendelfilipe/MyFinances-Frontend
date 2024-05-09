@@ -8,7 +8,6 @@ const WalletForm = (props) => {
         return hasPerCent !== null ? parseInt(hasPerCent) : 0;
     });
     let url = props.urlName
-    debugger
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -31,7 +30,6 @@ const WalletForm = (props) => {
 
 
     async function getPerCent(){
-        debugger
         const reponse = await api.get(`${url}${walletId}`)
         perCent = reponse.data;
         setPerCent(perCent)

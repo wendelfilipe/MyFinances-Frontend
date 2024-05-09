@@ -5,7 +5,6 @@ const AssetsForm = (props) =>{
     const [ buyPrice, setBuyPrice ] = useState(0);
     const [ amount, setAmount ] = useState(0);
     const [ sourceTypeAssets, setSourceTypeAssets ] = useState(0);
-    debugger
 
     
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -32,7 +31,6 @@ const AssetsForm = (props) =>{
             sourcetypeassets: parseInt(sourceTypeAssets), 
             amount: amount
         }
-        debugger
         await api.post("assets/PostCreateAssetAsync", asset)
     }
 

@@ -6,29 +6,35 @@ const CreateAssets = () => {
     const [ searchAssets, setSearchAssets ] = useState("");
     const [ assets, setAssets ] = useState([]);
     const [ clickedSearch, setClickedSearch ] = useState(false)
-    const [ closePriceFloat, setClosePriceFloat ] = useState(0)
+    const [ regularMarketOpen, setRegularMarketOpen ] = useState(0)
 
     async function getAssetsByApi(e){
-        const apiSearch = axios.create({
-            baseURL: "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo"
+
+        axios.get(`https://brapi.dev/api/available?search=${searchAssets}&token=eJGEyu8vVHctULdVdHYzQd`)
+        .then(responseSearch => {
+            const assets = responseSearch.data.stocks
+            setAssets(assets)
+        })
+        .catch(error => {
+            console.error('Erro:', error);
         });
-        const response = await apiSearch.get();
-        const assets = response.data.bestMatches;
-        setAssets(assets);
     }
+    
 
     async function handleClickSearch(){
-        const apiAssets = axios.create({
-            //$"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbolAsset}&outputsize=full&apikey=FWDJWLVR5XXX6J59";
-            baseURL: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=full&apikey=demo"
+
+        axios.get(`https://brapi.dev/api/quote/${searchAssets}?token=tSC4Zp6TZfoC6u7qeDGtdh`)
+        .then(response => {
+            const regularMarketOpenResult = response.data.results;
+            const regularMarketOpen = regularMarketOpenResult[0].regularMarketOpen;
+            setClickedSearch(true)
+            setRegularMarketOpen(regularMarketOpen)
+        })
+        .catch(error => {
+            console.error('Erro:', error);
         });
-        const response = await apiAssets.get();
-        const timesSeries = response.data["Time Series (Daily)"];
-        const latestDate = Object.keys(timesSeries)[0];
-        const closePrice = timesSeries[latestDate]["4. close"];
-        const closePriceFloat = parseFloat(closePrice);
-        setClickedSearch(true)
-        setClosePriceFloat(closePriceFloat)
+
+
     }
 
     return (
@@ -45,7 +51,7 @@ const CreateAssets = () => {
                     getAssetsByApi();}}/>
             <datalist id="datalistOptions">
                 {assets.map(an => (
-                   <option key={an.id} value={an["1. symbol"]} >{an["2. name"]}</option>
+                   <option key={an.id} value={an} >{an}</option>
                 ))}
             </datalist>
             <div>
@@ -53,7 +59,7 @@ const CreateAssets = () => {
                     ?   <div className="mt-3">
                             <AssetsForm 
                                 codName = {searchAssets}
-                                currentPrice = {closePriceFloat}
+                                currentPrice = {regularMarketOpen}
                             />
                         </div> 
                     :   <div>

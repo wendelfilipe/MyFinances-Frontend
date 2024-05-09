@@ -2,7 +2,6 @@ import React from "react";
 
 const AssetsHomeForm = (props) => {
     let assets = props.setToForm;
-    debugger
 
     return (
         <div>
