@@ -1,46 +1,76 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AssetsForm from "../forms/assets/AssetsForm";
 
 const CreateAssets = () => {
-    const [ assetsName, setAssetsName ] = useState([]);
-    const [ assetsSymbol, setAssetsSymbol ] =useState([]); 
-    let isClicked;
-
-
-    const apiAssets = axios.create({
-        baseURL: "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo"
-    });
+    const [ searchAssets, setSearchAssets ] = useState("");
+    const [ assets, setAssets ] = useState([]);
+    const [ clickedSearch, setClickedSearch ] = useState(false)
+    const [ regularMarketOpen, setRegularMarketOpen ] = useState(0)
 
     async function getAssetsByApi(e){
 
-        const url = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo";
-        const response = await apiAssets.get("");
-        const assets = response.data.bestMatches;
-        const assetsName = assets.map(asset => asset["2. name"]);
-        const assetsSymbol = assets.map(asset => asset["1. symbol"]);
-        setAssetsName(assetsName)
-        debugger
+        axios.get(`https://brapi.dev/api/available?search=${searchAssets}&token=eJGEyu8vVHctULdVdHYzQd`)
+        .then(responseSearch => {
+            const assets = responseSearch.data.stocks
+            setAssets(assets)
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+    }
+    
+
+    async function handleClickSearch(){
+
+        axios.get(`https://brapi.dev/api/quote/${searchAssets}?token=tSC4Zp6TZfoC6u7qeDGtdh`)
+        .then(response => {
+            const regularMarketOpenResult = response.data.results;
+            const regularMarketOpen = regularMarketOpenResult[0].regularMarketOpen;
+            setClickedSearch(true)
+            setRegularMarketOpen(regularMarketOpen)
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+
 
     }
 
-
     return (
-
+    <div className="d-flex justify-content-center">
         <div>
-            <div className="input-group mb-3">
-                <input type="text" className="form-control" value={assetsSymbol} aria-label="Text input with dropdown button"/>
-                <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onClick={getAssetsByApi}>Dropdown</button>
-                <ul className="dropdown-menu dropdown-menu-end">
-                    {assetsName.map((a) => (
-                         <li><a className="dropdown-item">{a}</a></li>
-                    ))}
-                </ul>
-            </div>
+            <label htmlFor="stocks" className="form-label">Buscar ações</label>
+            <input 
+                className="form-control" 
+                value={searchAssets} 
+                list="datalistOptions" 
+                id="stocks" 
+                placeholder="Acões" 
+                onChange={(e) => { setSearchAssets(e.target.value);
+                    getAssetsByApi();}}/>
+            <datalist id="datalistOptions">
+                {assets.map(an => (
+                   <option key={an.id} value={an} >{an}</option>
+                ))}
+            </datalist>
             <div>
-                <a className="btn btn-outline-success">Buscar</a>
-                <a className="btn btn-outline-success" href="/homepage">Cancelar</a>
+                {clickedSearch 
+                    ?   <div className="mt-3">
+                            <AssetsForm 
+                                codName = {searchAssets}
+                                currentPrice = {regularMarketOpen}
+                            />
+                        </div> 
+                    :   <div>
+                            <a className="btn btn-outline-success" onClick={handleClickSearch}>Buscar</a>
+                            <a className="btn btn-outline-success" href="/homepage">Cancelar</a>
+                        </div>
+                }
             </div>
         </div>
+    </div>
+
 
     )
 

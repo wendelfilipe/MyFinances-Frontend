@@ -5,7 +5,7 @@ import VersionForm from '../forms/Version/VersionForm';
 import cryptoJs from 'crypto-js';
 import RouterComponent from '../router/Router';
 
-const LoginPage = (props) => {
+const LoginPage = (propsRoute) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -14,7 +14,7 @@ const LoginPage = (props) => {
     
     async function handleClickLogin(e){
         e.preventDefault();
-
+        
         if(email ===''){
             alert("Email é obrigatótio")
         }
@@ -28,8 +28,8 @@ const LoginPage = (props) => {
                 let dataDeExpiracao = new Date();
                 dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
                 document.cookie = `UserIdCookie=${user.data.id};expires=${dataDeExpiracao}`;
+                propsRoute.onLogin();
 
-                await props.onLogin();
                 navigate("/homepage");
             }
             else{
@@ -50,7 +50,7 @@ const LoginPage = (props) => {
                     <div className="mb-3">
                         <label
                             htmlFor="email">
-                                Email
+                                Email*
                         </label>
                         <input
                             type="text"  
@@ -66,7 +66,7 @@ const LoginPage = (props) => {
                     <div className="mb-3">
                         <label 
                             htmlFor="password">
-                                Password
+                                Password*
                         </label>
                         <input 
                             type="password" 

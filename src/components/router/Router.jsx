@@ -3,21 +3,37 @@ import { Routes, Route, useNavigate, Navigate} from 'react-router-dom';
 import LoginPage from '../login/LoginPage';
 import HomePage from '../home/HomePage';
 import CreateUserPage from '../login/CreateUserPage';
-
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import WalletHome from '../home/walletHome/WalletHome';
 import CreateWallet from '../wallet/CreateWallet';
+import NavBarForm from '../forms/navBar/NavBarForm';
+import CreateAssets from '../assets/CreateAssets';
+import AssetsHomeForm from '../forms/assets/AssetsHomeForm';
+import StocksHome from '../assets/StocksHome';
+import FiisHome from '../assets/FiisHome';
+import InterAssetsHome from '../assets/InterAssetsHome';
+import FixedHome from '../assets/FixedHome';
 
-const RouterComponent = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState();
+
+const RouterComponent = (propsRoute) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return localStorage.getItem("isLoggedIn") === "true";
+    })
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        localStorage.setItem("isLoggedIn", "false");
+    };
 
     // Componente de rota protegida
-    async function handleLogin(){
+    const handleLogin = () => {
         setIsLoggedIn(true);
+        localStorage.setItem("isLoggedIn", "true");
     };
 
   return (
-    <Routes>
+    <div>
+        <Routes>
         <Route 
             path="/" 
             element={<LoginPage onLogin={handleLogin} />} 
@@ -38,7 +54,35 @@ const RouterComponent = () => {
             path="/createwallet"
             element={isLoggedIn ? <CreateWallet /> : <Navigate to="/" />}
         />
-    </Routes>
+         <Route
+            path="/createassets"
+            element={isLoggedIn ? <CreateAssets /> : <Navigate to="/" />}
+        />
+        <Route
+            path='/stockshome'
+            element={<StocksHome />}
+        />
+        <Route
+            path='/fiishome'
+            element={<FiisHome />}
+        />
+        <Route
+            path='/interassetshome'
+            element={<InterAssetsHome />}
+        />
+        <Route
+            path='/fixedhome'
+            element={<FixedHome />}
+        />
+        <Route
+            path='/assetshomeform'
+            element={<AssetsHomeForm />}
+        />
+        </Routes>
+        <NavBarForm 
+            onLogout={handleLogout}    
+        />
+    </div>
   );
 };
 

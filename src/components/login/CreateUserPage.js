@@ -7,15 +7,18 @@ const CreateUserPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
 
-    let newUser = {
+    let user = {
         name: name,
         email: email,
-        password: password
+        password: password,
+        sourcecreate: 1
     }
 
     const navigate = useNavigate();
 
-    async function handleClickCreateUser(){
+    async function handleClickCreateUser(e){
+        e.preventDefault();
+
         if (name === ''){
             alert("Campo Nome é obrigatório");
         }
@@ -27,7 +30,11 @@ const CreateUserPage = () => {
         }
             
         else{
-            api.post('user', newUser)
+            try{
+                await api.post("user/PostCreateUserByWebAsync", user)
+            }catch{
+                alert("Email ja existe")
+            }
         }
     }
 
@@ -54,7 +61,7 @@ const CreateUserPage = () => {
                         <div className="mb-3">
                             <label
                                 htmlFor="email">
-                                Email
+                                Email*
                             </label>
                             <input 
                                 type="text"
@@ -70,7 +77,7 @@ const CreateUserPage = () => {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password">
-                                Password
+                                Password*
                             </label>
                             <input 
                                 className="form-control mt-2"
@@ -83,7 +90,7 @@ const CreateUserPage = () => {
                                 required
                             />
                         </div>
-                        <div>
+                        <div className="mt-3">
                             <button
                                 className="btn btn-outline-success me-2"
                                 onClick={handleClickCreateUser}>
