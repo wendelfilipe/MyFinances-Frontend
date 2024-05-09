@@ -23,6 +23,7 @@ const LoginPage = (propsRoute) => {
         }
         else{
             const user = await api.get(`user/GetUserDTOByEmailAsync/${email}`)
+            debugger
             if(email === user.data.email && password === user.data.password){
 
                 let dataDeExpiracao = new Date();
