@@ -10,10 +10,12 @@ const VersionForm = () => {
                     <div className="card-header">v1.0.0</div>
                     <div className="card-body">
                         <p className="card-text">
-                                My finances App, A sua carteira de investimentos
+                                My finances App, A sua carteira de investimentos está pronta
                         </p>
                         <hr />
-                        <p>Em construção, Aguarde!</p>
+                        <p>
+                            Agora você pode criar um usuario e criar sua carteira!
+                        </p>
                     </div>
                 </div>
         </div>
