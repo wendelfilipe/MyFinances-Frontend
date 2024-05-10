@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AssetsForm from "../forms/assets/AssetsForm";
 
-const CreateAssets = () => {
+const CreateAssets = (props) => {
     const [ searchAssets, setSearchAssets ] = useState("");
     const [ assets, setAssets ] = useState([]);
     const [ clickedSearch, setClickedSearch ] = useState(false)
     const [ regularMarketOpen, setRegularMarketOpen ] = useState(0)
 
-    async function getAssetsByApi(e){
+    async function getAssetsByApi(){
 
         axios.get(`https://brapi.dev/api/available?search=${searchAssets}&token=eJGEyu8vVHctULdVdHYzQd`)
         .then(responseSearch => {
+            debugger
             const assets = responseSearch.data.stocks
             setAssets(assets)
         })
@@ -25,6 +26,7 @@ const CreateAssets = () => {
 
         axios.get(`https://brapi.dev/api/quote/${searchAssets}?token=tSC4Zp6TZfoC6u7qeDGtdh`)
         .then(response => {
+            debugger
             const regularMarketOpenResult = response.data.results;
             const regularMarketOpen = regularMarketOpenResult[0].regularMarketOpen;
             setClickedSearch(true)
@@ -33,9 +35,8 @@ const CreateAssets = () => {
         .catch(error => {
             console.error('Erro:', error);
         });
-
-
     }
+
 
     return (
     <div className="d-flex justify-content-center">
@@ -47,8 +48,10 @@ const CreateAssets = () => {
                 list="datalistOptions" 
                 id="stocks" 
                 placeholder="Acões" 
-                onChange={(e) => { setSearchAssets(e.target.value);
-                    getAssetsByApi();}}/>
+                onChange={(e) => { 
+                    setSearchAssets(e.target.value);
+                    getAssetsByApi();}}
+                />
             <datalist id="datalistOptions">
                 {assets.map(an => (
                    <option key={an.id} value={an} >{an}</option>

@@ -45,7 +45,10 @@ const StocksHome = () => {
                     }
                 </div>
             </div>
-            <a className="text-decoration-none btn btn-outline-success" href="/createassets">Adicionar Ação</a>
+            <div>
+                <a className="text-decoration-none btn btn-outline-success" href="/createassets">Adicionar Ação</a>
+                <a className="text-decoration-none btn btn-outline-success" href="/homepage">Voltar</a>
+            </div>
         </div>
     )
 
