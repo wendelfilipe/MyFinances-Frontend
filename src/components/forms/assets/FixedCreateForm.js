@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import api from "../../../api/Api";
 
-const AssetsForm = (props) =>{
+const FixedCreateForm = (props) =>{
     const [ buyPrice, setBuyPrice ] = useState(0);
     const [ amount, setAmount ] = useState(0);
     const [ sourceTypeAssets, setSourceTypeAssets ] = useState(0);
+    const [ buyDate, setBuyDate ] = useState();
+    const [ expirationDate, setExpirationDate ] = useState();
+    const [ perCentCDI, setPerCentCDI ] = useState();
+    debugger
 
     
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -23,43 +27,46 @@ const AssetsForm = (props) =>{
 
         
         const asset = {
-            codname: props.codName,
-            currentprice: props.currentPrice,
-            buyprice: buyPrice,
+            codname: "Selic",
+            currentprice: buyPrice,
+            buyPrice: buyPrice,
             walletid: walletId,
             sourcecreate: 1,
             sourcetypeassets: parseInt(sourceTypeAssets), 
-            amount: amount
+            amount: 1,
+            percentcdi: perCentCDI,
+            startdate: buyDate,
+            enddate: expirationDate
         }
-        await api.post("assets/PostCreateAssetAsync", asset)
+        await api.post("fixed/PostCreateFixedAsync", asset)
     }
 
     return (
 
         <form>
             <div className="mb-3">
-                <label htmlFor="currentPrice" className="form-label">Preço atual</label>
-                <input type="number" className="form-control" readOnly value={props.currentPrice} id="currentPrice" placeholder="Preço atual"/>
+                <label htmlFor="buyPrice" className="form-label">Preço pago*</label>
+                <input type="number" value={buyPrice} onChange={(e) => setBuyPrice(e.target.value)} className="form-control" id="buyPrice" placeholder="Preço pago"/>
             </div>
             <div className="mb-3">
-                <label htmlFor="buyPrice" className="form-label">Preço pago</label>
-                <input type="number" value={buyPrice} onChange={(e) => setBuyPrice(e.target.value)} className="form-control" id="buyPrice" placeholder="Preço pago" required/>
+                <label htmlFor="amount" className="form-label">Taxa % (somente numeros)*</label>
+                <input type="number" value={perCentCDI} onChange={(e) => setAmount(e.target.value)} className="form-control" id="buyPrice" placeholder="Quantidade"/>
             </div>
             <div className="mb-3">
-                <label htmlFor="amount" className="form-label">Quantidade</label>
-                <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="form-control" id="buyPrice" placeholder="Quantidade" required/>
-            </div>
-            <div>
                 <label htmlFor="buyDate" className="form-label">
                     Data da Compra*
+                    <span className="ms-5">
+                        Data do Vencimento*
+                    </span>
                 </label>
                 <div className="input-group">
-                    <input type="text" aria-label="First name" className="form-control" placeholder="Data da Compra" required/>
+                    <input type="date" value={buyDate} onChange={(e) => setBuyDate(e.target.value)} aria-label="First name" className="form-control" placeholder="Inicio"/>
+                    <input type="date" value={expirationDate} onChange={(e) => setExpirationDate(e.target.value)} aria-label="Last name" className="form-control" placeholder="Fim"/>
                 </div>
             </div>
             <div className="mb-3">
                 <select className="form-select" aria-label="Default select example" value={sourceTypeAssets} onChange={(e) => setSourceTypeAssets(e.target.value)}>
-                    <option selected>Selecione um tipo</option>
+                    <option selected>Selecione um tipo*</option>
                     <option value="1">Acões</option>
                     <option value="4">Fundos Imobiliários</option>
                     <option value="3">Ativos Internacionais</option>
@@ -67,10 +74,10 @@ const AssetsForm = (props) =>{
                 </select>
             </div>
             <button className="btn btn-primary me-2" onClick={postCreateAssets}>Adicionar</button>
-            <a className="btn btn-primary" href="/createassets">Cancelar</a>
+            <a className="btn btn-primary" href="/fixedhome">Cancelar</a>
         </form>
 
     )
 }
 
-export default AssetsForm;
+export default FixedCreateForm;

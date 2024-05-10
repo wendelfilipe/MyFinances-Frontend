@@ -6,7 +6,7 @@ const AssetsHomeForm = (props) => {
     return (
         <div>
             {assets.map(a => (
-                <div className="card mb-3">
+                <div key={a.id} className="card mb-3">
                 <div className="card-header">
                     Código da Ação: {a.codName}
                 </div>

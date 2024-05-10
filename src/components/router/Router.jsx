@@ -8,6 +8,7 @@ import WalletHome from '../home/walletHome/WalletHome';
 import CreateWallet from '../wallet/CreateWallet';
 import NavBarForm from '../forms/navBar/NavBarForm';
 import CreateAssets from '../assets/CreateAssets';
+import CreateFixed from '../assets/CreateFixed';
 import AssetsHomeForm from '../forms/assets/AssetsHomeForm';
 import StocksHome from '../assets/StocksHome';
 import FiisHome from '../assets/FiisHome';
@@ -77,6 +78,10 @@ const RouterComponent = (propsRoute) => {
         <Route
             path='/assetshomeform'
             element={<AssetsHomeForm />}
+        />
+        <Route
+            path='/createFixed'
+            element={<CreateFixed />}
         />
         </Routes>
         <NavBarForm 

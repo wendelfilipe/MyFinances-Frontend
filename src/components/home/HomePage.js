@@ -3,14 +3,20 @@ import api from "../../api/Api";
 import NavBarForm from "../forms/navBar/NavBarForm";
 import WalletForm from "../forms/wallet/WalletForm";
 import { Col, Container, Row } from "react-bootstrap";
+import CreateAssets from "../assets/CreateAssets";
 
 const HomePage = () => {
     let [wallets, setWallets ] = useState([]);
     let [patrimonyString, setPatrimonyString ] = useState("");
+    const [showChild, setShowChild] = useState(false);
     const urlStocks = "stocks/GetPerCentStocksByWalletId/"
     const urlFiis = "fiis/GetPerCentFiisByWalletId/"
     const urlInterAssets = "internacionalAssets/GetPerCentInternacionalAssetsByWalletId/"
     const urlFixed = "fixed/GetPerCentFixedsByWalletId/"
+    let [isClicked, setIsClicked] = useState(() => {
+        let isClicked = localStorage.getItem("isClicked");
+        return isClicked ? isClicked : false;
+    })
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -44,6 +50,11 @@ const HomePage = () => {
         let patrimony = await api.get(`assets/GetPatrimonyAsync/${walletId}`);
         patrimonyString = patrimony.data.toFixed(2);
         setPatrimonyString(patrimonyString);
+    }
+
+    function isClickedFixed(){
+        isClicked = true;
+        setIsClicked(isClicked)    
     }
 
     if(wallets.length === 0){
@@ -98,7 +109,7 @@ const HomePage = () => {
                         </div>
                         <div className="row mt-3">
                             <div className="col-md-6">
-                            <a className="text-decoration-none" href="/fixedhome" >
+                            <a className="text-decoration-none" href="/fixedhome" onClick={isClickedFixed}>
                                 <WalletForm 
                                     nameAssets={"Renda Fixa"}
                                     urlName={urlFixed}
