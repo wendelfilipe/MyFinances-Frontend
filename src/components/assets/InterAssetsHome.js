@@ -4,6 +4,7 @@ import api from "../../api/Api";
 
 const InterAssetsHome = () => {
     let [ interAssets, setInterAssets ] = useState([]);
+    let [ totalAssets, setTotalAssets ] = useState([]);
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -18,6 +19,8 @@ const InterAssetsHome = () => {
         const fetchData = async () => {
 
             await getInterAssets();
+
+            await getAssets();
         };
         fetchData();
     }, []);
@@ -25,6 +28,11 @@ const InterAssetsHome = () => {
     async function getInterAssets(){
         interAssets = await api.get(`internacionalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`)
         setInterAssets(interAssets.data)
+    }
+
+    async function getAssets(){
+        totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
+        setTotalAssets(totalAssets.data)
     }
 
     return(
@@ -37,6 +45,7 @@ const InterAssetsHome = () => {
                 { interAssets.length > 0
                         ?   <AssetsHomeForm 
                                 setToForm={interAssets}
+                                setTotalAssetsToForm={totalAssets}
                             />
                         :   <div>
                                 Adicione Ações
