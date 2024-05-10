@@ -4,6 +4,7 @@ import api from "../../api/Api";
 
 const FixedHome = () => {
     let [ fixed, setFixed ] = useState([]);
+    let [ totalAssets, setTotalAssets ] = useState([]);
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -18,6 +19,8 @@ const FixedHome = () => {
         const fetchData = async () => {
 
             await getFixed();
+
+            await getAssets();
         };
         fetchData();
     }, []);
@@ -25,6 +28,11 @@ const FixedHome = () => {
     async function getFixed(){
         fixed = await api.get(`fixed/GetAllFixedByWalletIdAsync/${walletId}`)
         setFixed(fixed.data)
+    }
+
+    async function getAssets(){
+        totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
+        setTotalAssets(totalAssets.data)
     }
 
     return(
@@ -37,6 +45,7 @@ const FixedHome = () => {
                 { fixed.length > 0
                         ?   <AssetsHomeForm 
                                 setToForm={fixed}
+                                setTotalAssetsToForm={totalAssets}
                             />
                         :   <div>
                                 Adicione Ações
