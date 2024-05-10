@@ -5,6 +5,7 @@ const AssetsForm = (props) =>{
     const [ buyPrice, setBuyPrice ] = useState(0);
     const [ amount, setAmount ] = useState(0);
     const [ sourceTypeAssets, setSourceTypeAssets ] = useState(0);
+    const [buyDate , setBuyDate ] = useState();
 
     
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -27,6 +28,7 @@ const AssetsForm = (props) =>{
             currentprice: props.currentPrice,
             buyprice: buyPrice,
             walletid: walletId,
+            startdate: buyDate,
             sourcecreate: 1,
             sourcetypeassets: parseInt(sourceTypeAssets), 
             amount: amount
@@ -49,12 +51,12 @@ const AssetsForm = (props) =>{
                 <label htmlFor="amount" className="form-label">Quantidade</label>
                 <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="form-control" id="buyPrice" placeholder="Quantidade" required/>
             </div>
-            <div>
+            <div className="mb-3">
                 <label htmlFor="buyDate" className="form-label">
                     Data da Compra*
                 </label>
                 <div className="input-group">
-                    <input type="text" aria-label="First name" className="form-control" placeholder="Data da Compra" required/>
+                    <input type="date" aria-label="First name" value={buyDate} onChange={(e) => setBuyDate(e.target.value)} className="form-control" placeholder="Data da Compra" required/>
                 </div>
             </div>
             <div className="mb-3">
