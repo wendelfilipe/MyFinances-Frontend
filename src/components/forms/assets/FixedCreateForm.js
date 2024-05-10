@@ -8,7 +8,6 @@ const FixedCreateForm = (props) =>{
     const [ buyDate, setBuyDate ] = useState();
     const [ expirationDate, setExpirationDate ] = useState();
     const [ perCentCDI, setPerCentCDI ] = useState();
-    debugger
 
     
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
