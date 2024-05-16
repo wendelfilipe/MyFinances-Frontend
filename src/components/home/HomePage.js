@@ -34,7 +34,9 @@ const HomePage = () => {
         const fetchData = async () => {
 
             await getWallets();
-            await getAssets();
+
+            if(walletId > 0)
+                await getAssets();
 
         }
        fetchData();

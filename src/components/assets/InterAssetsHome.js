@@ -3,7 +3,8 @@ import AssetsHomeForm from "../forms/assets/AssetsHomeForm";
 import api from "../../api/Api";
 
 const InterAssetsHome = () => {
-    let [ interAssets, setInterAssets ] = useState([]);
+    let [ userAssetsInterAssets, setUserAssetsInterAssets ] = useState([]);
+    let [ userInterAssets, setUserInterAssets ] = useState([]);
     let [ totalAssets, setTotalAssets ] = useState([]);
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -26,8 +27,12 @@ const InterAssetsHome = () => {
     }, []);
 
     async function getInterAssets(){
-        interAssets = await api.get(`internacionalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`)
-        setInterAssets(interAssets.data)
+        const response = await api.get(`internacionalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`)
+        let interAssets = response.data
+        userInterAssets = interAssets.interAssetsAssets
+        userAssetsInterAssets = interAssets.userInterAssets
+        setUserInterAssets(userInterAssets)
+        setUserAssetsInterAssets(userAssetsInterAssets)
     }
 
     async function getAssets(){
@@ -42,9 +47,10 @@ const InterAssetsHome = () => {
                     Ativos Internacionais
                 </div>
                 <div className="card-body">
-                { interAssets.length > 0
+                { userAssetsInterAssets.length > 0
                         ?   <AssetsHomeForm 
-                                setToForm={interAssets}
+                                setUserAssetsToForm={userInterAssets}
+                                setAllUserAssetsToForm={userAssetsInterAssets}
                                 setTotalAssetsToForm={totalAssets}
                             />
                         :   <div>
