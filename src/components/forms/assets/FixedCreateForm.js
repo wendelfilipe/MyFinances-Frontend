@@ -37,7 +37,6 @@ const FixedCreateForm = (props) =>{
             startdate: buyDate,
             enddate: expirationDate 
         }
-        debugger
         await api.post("fixed/PostCreateFixedAsync", asset)
     }
 

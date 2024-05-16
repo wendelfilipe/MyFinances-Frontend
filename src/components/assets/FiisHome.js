@@ -29,7 +29,7 @@ const FiisHome = () => {
     async function getFiis(){
         const response = await api.get(`fiis/GetAllFiisByWalletIdAsync/${walletId}`)
         let fiis = response.data
-        userFiis = fiis.fiisAssets
+        userFiis = fiis.fiiAssets
         userAssetsFiis = fiis.userFiis
         setUserFiis(userFiis)
         setUserAssetsFiis(userAssetsFiis)

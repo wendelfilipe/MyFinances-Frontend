@@ -4,7 +4,7 @@ import api from "../../api/Api";
 
 const InterAssetsHome = () => {
     let [ userAssetsInterAssets, setUserAssetsInterAssets ] = useState([]);
-    let [ userInterAssets, setUserInterAssets ] = useState([]);
+    let [ InterAssets, setInterAssets ] = useState([]);
     let [ totalAssets, setTotalAssets ] = useState([]);
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -28,10 +28,10 @@ const InterAssetsHome = () => {
 
     async function getInterAssets(){
         const response = await api.get(`internacionalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`)
-        let interAssets = response.data
-        userInterAssets = interAssets.interAssetsAssets
-        userAssetsInterAssets = interAssets.userInterAssets
-        setUserInterAssets(userInterAssets)
+        let interAssetsData = response.data
+        InterAssets = interAssetsData.interAssets
+        userAssetsInterAssets = interAssetsData.userInterAssets
+        setInterAssets(InterAssets)
         setUserAssetsInterAssets(userAssetsInterAssets)
     }
 
@@ -49,7 +49,7 @@ const InterAssetsHome = () => {
                 <div className="card-body">
                 { userAssetsInterAssets.length > 0
                         ?   <AssetsHomeForm 
-                                setUserAssetsToForm={userInterAssets}
+                                setUserAssetsToForm={InterAssets}
                                 setAllUserAssetsToForm={userAssetsInterAssets}
                                 setTotalAssetsToForm={totalAssets}
                             />

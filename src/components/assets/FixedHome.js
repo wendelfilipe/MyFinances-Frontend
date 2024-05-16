@@ -33,7 +33,6 @@ const FixedHome = () => {
         userAssetsFixed = fixed.userAssetsFixed
         setUserFixed(userFixed)
         setUserAssetsFixed(userAssetsFixed)
-        debugger
     }
 
     async function getAssets(){
