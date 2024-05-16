@@ -28,15 +28,16 @@ const FixedCreateForm = (props) =>{
         const asset = {
             codname: "Selic",
             currentprice: buyPrice,
-            buyPrice: buyPrice,
             walletid: walletId,
             sourcecreate: 1,
-            sourcetypeassets: parseInt(sourceTypeAssets), 
+            sourcetypeassets: parseInt(sourceTypeAssets),
+            buyPrice: buyPrice,
             amount: 1,
             percentcdi: perCentCDI,
             startdate: buyDate,
-            enddate: expirationDate
+            enddate: expirationDate 
         }
+        debugger
         await api.post("fixed/PostCreateFixedAsync", asset)
     }
 
@@ -49,7 +50,7 @@ const FixedCreateForm = (props) =>{
             </div>
             <div className="mb-3">
                 <label htmlFor="amount" className="form-label">Taxa % (somente numeros)*</label>
-                <input type="number" value={perCentCDI} onChange={(e) => setAmount(e.target.value)} className="form-control" id="buyPrice" placeholder="Quantidade"/>
+                <input type="number" value={perCentCDI} onChange={(e) => setPerCentCDI(e.target.value)} className="form-control" id="buyPrice" placeholder="CDI %"/>
             </div>
             <div className="mb-3">
                 <label htmlFor="buyDate" className="form-label">

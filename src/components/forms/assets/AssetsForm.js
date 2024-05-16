@@ -26,13 +26,15 @@ const AssetsForm = (props) =>{
         const asset = {
             codname: props.codName,
             currentprice: props.currentPrice,
-            buyprice: buyPrice,
             walletid: walletId,
-            startdate: buyDate,
             sourcecreate: 1,
-            sourcetypeassets: parseInt(sourceTypeAssets), 
-            amount: amount
+            sourcetypeassets: parseInt(sourceTypeAssets),
+            buyPrice: buyPrice,
+            amount: amount,
+            startdate: buyDate 
         }
+
+
         await api.post("assets/PostCreateAssetAsync", asset)
     }
 
