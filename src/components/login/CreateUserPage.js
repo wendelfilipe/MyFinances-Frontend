@@ -5,7 +5,8 @@ import api from "../../api/Api";
 const CreateUserPage = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState('');
+    let [ message , setMessage ] = useState();
 
     let user = {
         name: name,
@@ -30,11 +31,13 @@ const CreateUserPage = () => {
         }
             
         else{
-            try{
-                await api.post("user/PostCreateUserByWebAsync", user)
-            }catch{
-                alert("Email ja existe")
-            }
+            
+            const responde = await api.post("user/PostCreateUserByWebAsync", user)
+            debugger
+            message = responde.data;
+            setMessage(message);
+
+            alert(message)
         }
     }
 
