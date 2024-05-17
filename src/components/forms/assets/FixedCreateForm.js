@@ -8,6 +8,7 @@ const FixedCreateForm = (props) =>{
     const [ buyDate, setBuyDate ] = useState();
     const [ expirationDate, setExpirationDate ] = useState();
     const [ perCentCDI, setPerCentCDI ] = useState();
+    let [message, setMessage ] = useState();
 
     
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -36,8 +37,13 @@ const FixedCreateForm = (props) =>{
             percentcdi: perCentCDI,
             startdate: buyDate,
             enddate: expirationDate 
-        }
-        await api.post("fixed/PostCreateFixedAsync", asset)
+        };
+
+        const reponse = await api.post("fixed/PostCreateFixedAsync", asset);
+        message = reponse.data;
+        setMessage(message);
+
+        alert(message);
     }
 
     return (
