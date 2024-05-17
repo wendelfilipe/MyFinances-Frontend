@@ -3,7 +3,9 @@ import AssetsHomeForm from "../forms/assets/AssetsHomeForm";
 import api from "../../api/Api";
 
 const InterAssetsHome = () => {
-    let [ interAssets, setInterAssets ] = useState([]);
+    let [ userAssetsInterAssets, setUserAssetsInterAssets ] = useState([]);
+    let [ InterAssets, setInterAssets ] = useState([]);
+    let [ totalAssets, setTotalAssets ] = useState([]);
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -18,13 +20,24 @@ const InterAssetsHome = () => {
         const fetchData = async () => {
 
             await getInterAssets();
+
+            await getAssets();
         };
         fetchData();
     }, []);
 
     async function getInterAssets(){
-        interAssets = await api.get(`internacionalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`)
-        setInterAssets(interAssets.data)
+        const response = await api.get(`internacionalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`)
+        let interAssetsData = response.data
+        InterAssets = interAssetsData.interAssets
+        userAssetsInterAssets = interAssetsData.userInterAssets
+        setInterAssets(InterAssets)
+        setUserAssetsInterAssets(userAssetsInterAssets)
+    }
+
+    async function getAssets(){
+        totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
+        setTotalAssets(totalAssets.data)
     }
 
     return(
@@ -34,9 +47,11 @@ const InterAssetsHome = () => {
                     Ativos Internacionais
                 </div>
                 <div className="card-body">
-                { interAssets.length > 0
+                { userAssetsInterAssets.length > 0
                         ?   <AssetsHomeForm 
-                                setToForm={interAssets}
+                                setUserAssetsToForm={InterAssets}
+                                setAllUserAssetsToForm={userAssetsInterAssets}
+                                setTotalAssetsToForm={totalAssets}
                             />
                         :   <div>
                                 Adicione Ações

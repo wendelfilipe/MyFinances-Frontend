@@ -3,7 +3,9 @@ import AssetsHomeForm from "../forms/assets/AssetsHomeForm";
 import api from "../../api/Api";
 
 const FixedHome = () => {
-    let [ fixed, setFixed ] = useState([]);
+    let [ userAssetsFixed, setUserAssetsFixed ] = useState([]);
+    let [ userFixed, setUserFixed ] = useState([]);
+    let [ totalAssets, setTotalAssets ] = useState([]);
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -18,13 +20,24 @@ const FixedHome = () => {
         const fetchData = async () => {
 
             await getFixed();
+
+            await getAssets();
         };
         fetchData();
     }, []);
 
     async function getFixed(){
-        fixed = await api.get(`fixed/GetAllFixedByWalletIdAsync/${walletId}`)
-        setFixed(fixed.data)
+        const response = await api.get(`fixed/GetAllFixedByWalletIdAsync/${walletId}`)
+        let fixed = response.data
+        userFixed = fixed.assetsFixed
+        userAssetsFixed = fixed.userAssetsFixed
+        setUserFixed(userFixed)
+        setUserAssetsFixed(userAssetsFixed)
+    }
+
+    async function getAssets(){
+        totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
+        setTotalAssets(totalAssets.data)
     }
 
     return(
@@ -34,9 +47,11 @@ const FixedHome = () => {
                     Renda Fixa
                 </div>
                 <div className="card-body">
-                { fixed.length > 0
+                { userAssetsFixed.length > 0
                         ?   <AssetsHomeForm 
-                                setToForm={fixed}
+                                setUserAssetsToForm={userFixed}
+                                setAllUserAssetsToForm={userAssetsFixed}
+                                setTotalAssetsToForm={totalAssets}
                             />
                         :   <div>
                                 Adicione Ações

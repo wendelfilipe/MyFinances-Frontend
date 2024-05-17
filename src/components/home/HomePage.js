@@ -34,7 +34,9 @@ const HomePage = () => {
         const fetchData = async () => {
 
             await getWallets();
-            await getAssets();
+
+            if(walletId > 0)
+                await getAssets();
 
         }
        fetchData();
@@ -85,7 +87,7 @@ const HomePage = () => {
                     <h5 className="card-header d-flex justify-content-between align-items-center">
                         {walletName}
                         <span className="text-end">
-                            Patrimonio: R$ {patrimonyString}   
+                            Patrimônio: R$ {patrimonyString}   
                         </span>
                     </h5>
                     <div className="card-body">

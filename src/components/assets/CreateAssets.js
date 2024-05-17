@@ -12,7 +12,6 @@ const CreateAssets = (props) => {
 
         axios.get(`https://brapi.dev/api/available?search=${searchAssets}&token=eJGEyu8vVHctULdVdHYzQd`)
         .then(responseSearch => {
-            debugger
             const assets = responseSearch.data.stocks
             setAssets(assets)
         })
@@ -26,7 +25,6 @@ const CreateAssets = (props) => {
 
         axios.get(`https://brapi.dev/api/quote/${searchAssets}?token=tSC4Zp6TZfoC6u7qeDGtdh`)
         .then(response => {
-            debugger
             const regularMarketOpenResult = response.data.results;
             const regularMarketOpen = regularMarketOpenResult[0].regularMarketOpen;
             setClickedSearch(true)

@@ -6,6 +6,7 @@ const AssetsForm = (props) =>{
     const [ amount, setAmount ] = useState(0);
     const [ sourceTypeAssets, setSourceTypeAssets ] = useState(0);
     const [buyDate , setBuyDate ] = useState();
+    let [ message, setMessage ] = useState();
 
     
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -26,14 +27,20 @@ const AssetsForm = (props) =>{
         const asset = {
             codname: props.codName,
             currentprice: props.currentPrice,
-            buyprice: buyPrice,
             walletid: walletId,
-            startdate: buyDate,
             sourcecreate: 1,
-            sourcetypeassets: parseInt(sourceTypeAssets), 
-            amount: amount
-        }
-        await api.post("assets/PostCreateAssetAsync", asset)
+            sourcetypeassets: parseInt(sourceTypeAssets),
+            buyPrice: buyPrice,
+            amount: amount,
+            startdate: buyDate 
+        };
+
+
+        const reponse = await api.post("assets/PostCreateAssetAsync", asset);
+        message = reponse.data;
+        setMessage(message);
+
+        alert(message);
     }
 
     return (

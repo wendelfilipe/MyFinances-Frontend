@@ -8,7 +8,7 @@ const FixedCreateForm = (props) =>{
     const [ buyDate, setBuyDate ] = useState();
     const [ expirationDate, setExpirationDate ] = useState();
     const [ perCentCDI, setPerCentCDI ] = useState();
-    debugger
+    let [message, setMessage ] = useState();
 
     
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -29,16 +29,21 @@ const FixedCreateForm = (props) =>{
         const asset = {
             codname: "Selic",
             currentprice: buyPrice,
-            buyPrice: buyPrice,
             walletid: walletId,
             sourcecreate: 1,
-            sourcetypeassets: parseInt(sourceTypeAssets), 
+            sourcetypeassets: parseInt(sourceTypeAssets),
+            buyPrice: buyPrice,
             amount: 1,
             percentcdi: perCentCDI,
             startdate: buyDate,
-            enddate: expirationDate
-        }
-        await api.post("fixed/PostCreateFixedAsync", asset)
+            enddate: expirationDate 
+        };
+
+        const reponse = await api.post("fixed/PostCreateFixedAsync", asset);
+        message = reponse.data;
+        setMessage(message);
+
+        alert(message);
     }
 
     return (
@@ -50,7 +55,7 @@ const FixedCreateForm = (props) =>{
             </div>
             <div className="mb-3">
                 <label htmlFor="amount" className="form-label">Taxa % (somente numeros)*</label>
-                <input type="number" value={perCentCDI} onChange={(e) => setAmount(e.target.value)} className="form-control" id="buyPrice" placeholder="Quantidade"/>
+                <input type="number" value={perCentCDI} onChange={(e) => setPerCentCDI(e.target.value)} className="form-control" id="buyPrice" placeholder="CDI %"/>
             </div>
             <div className="mb-3">
                 <label htmlFor="buyDate" className="form-label">

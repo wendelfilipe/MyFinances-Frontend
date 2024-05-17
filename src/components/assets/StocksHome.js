@@ -3,7 +3,9 @@ import AssetsHomeForm from "../forms/assets/AssetsHomeForm";
 import api from "../../api/Api";
 
 const StocksHome = () => {
-    let [ stocks, setStocks ] = useState([]);
+    let [ userStocks, setUserStocks ] = useState([]);
+    let [ userAssetsStocks, setUserAssetsStocks ] = useState([]);
+    let [ totalAssets, setTotalAssets ] = useState([]);
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -18,13 +20,24 @@ const StocksHome = () => {
         const fetchData = async () => {
 
             await getStocks();
+
+            await getAssets();
         };
         fetchData();
     }, []);
 
     async function getStocks(){
-        stocks = await api.get(`stocks/GetAllStocksByWalletIdAsync/${walletId}`)
-        setStocks(stocks.data)
+        const response = await api.get(`stocks/GetAllStocksByWalletIdAsync/${walletId}`)
+        let stocks = response.data
+        userStocks = stocks.stockAssets
+        userAssetsStocks = stocks.userAssetsStock
+        setUserStocks(userStocks)
+        setUserAssetsStocks(userAssetsStocks)
+    }
+
+    async function getAssets(){
+        totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
+        setTotalAssets(totalAssets.data)
     }
 
 
@@ -35,9 +48,11 @@ const StocksHome = () => {
                     Ações
                 </div>
                 <div className="card-body">
-                    { stocks.length > 0
+                    { userAssetsStocks.length > 0
                         ?   <AssetsHomeForm 
-                                setToForm={stocks}
+                                setUserAssetsToForm={userStocks}
+                                setAllUserAssetsToForm={userAssetsStocks}
+                                setTotalAssetsToForm={totalAssets}
                             />
                         :   <div>
                                 Adicione Ações

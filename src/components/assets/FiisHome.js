@@ -3,7 +3,9 @@ import AssetsHomeForm from "../forms/assets/AssetsHomeForm";
 import api from "../../api/Api";
 
 const FiisHome = () => {
-    let [ fiis, setFiis ] = useState([]);
+    let [ userAssetsFiis, setUserAssetsFiis ] = useState([]);
+    let [ userFiis, setUserFiis ] = useState([]);
+    let [ totalAssets, setTotalAssets ] = useState([]);
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -18,14 +20,26 @@ const FiisHome = () => {
         const fetchData = async () => {
 
             await getFiis();
+
+            await getAssets();
         };
         fetchData();
     }, []);
 
     async function getFiis(){
-        fiis = await api.get(`fiis/GetAllFiisByWalletIdAsync/${walletId}`)
-        setFiis(fiis.data)
+        const response = await api.get(`fiis/GetAllFiisByWalletIdAsync/${walletId}`)
+        let fiis = response.data
+        userFiis = fiis.fiiAssets
+        userAssetsFiis = fiis.userFiis
+        setUserFiis(userFiis)
+        setUserAssetsFiis(userAssetsFiis)
     }
+
+    async function getAssets(){
+        totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
+        setTotalAssets(totalAssets.data)
+    }
+
     return(
         <div>
             <div className="card">
@@ -33,9 +47,11 @@ const FiisHome = () => {
                     Fundos Imobiliários
                 </div>
                 <div className="card-body">
-                { fiis.length > 0
+                { userAssetsFiis.length > 0
                         ?   <AssetsHomeForm 
-                                setToForm={fiis}
+                                setUserAssetsToForm={userFiis}
+                                setAllUserAssetsToForm={userAssetsFiis}
+                                setTotalAssetsToForm={totalAssets}
                             />
                         :   <div>
                                 Adicione Ações
