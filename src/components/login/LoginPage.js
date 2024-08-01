@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import api  from '../../api/Api'
 import { useNavigate } from 'react-router-dom';
 import VersionForm from '../forms/Version/VersionForm';
@@ -10,6 +10,18 @@ const LoginPage = (propsRoute) => {
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await UpdateAssets();
+        }
+        fetchData();
+    });
+
+    function UpdateAssets(){
+        const response  = api.get("assets/UpdateAssetsAsync")
+        debugger
+    }
 
     
     async function handleClickLogin(e){
