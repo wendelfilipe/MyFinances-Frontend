@@ -32,6 +32,7 @@ const CreateAssets = (props) => {
         })
         .catch(error => {
             console.error('Erro:', error);
+            
         });
     }
 
