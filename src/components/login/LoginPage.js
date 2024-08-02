@@ -11,17 +11,17 @@ const LoginPage = (propsRoute) => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            await UpdateAssets();
-        }
-        fetchData();
-    });
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         await UpdateAssets();
+    //     }
+    //     fetchData();
+    // });
 
-    function UpdateAssets(){
-        const response  = api.get("assets/UpdateAssetsAsync")
-        debugger
-    }
+    // function UpdateAssets(){
+    //     const response  = api.get("assets/UpdateAssetsAsync")
+    //     debugger
+    // }
 
     
     async function handleClickLogin(e){

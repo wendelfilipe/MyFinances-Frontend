@@ -14,6 +14,7 @@ import StocksHome from '../assets/StocksHome';
 import FiisHome from '../assets/FiisHome';
 import InterAssetsHome from '../assets/InterAssetsHome';
 import FixedHome from '../assets/FixedHome';
+import InitialPage from '../home/InitialPage';
 
 
 const RouterComponent = (propsRoute) => {
@@ -35,8 +36,12 @@ const RouterComponent = (propsRoute) => {
   return (
     <div>
         <Routes>
+        <Route
+            path='/'
+            element={<InitialPage/>}
+        />
         <Route 
-            path="/" 
+            path="/loginpage" 
             element={<LoginPage onLogin={handleLogin} />} 
         />
         <Route

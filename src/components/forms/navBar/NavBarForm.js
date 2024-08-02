@@ -17,9 +17,9 @@ const NavBarForm = (propsRoute) => {
 
     return(
         <form>
-            <nav className="navbar bg-dark fixed-top">
+            <nav className="navbar bg-white fixed-top">
             <div className="container-fluid">
-                <a className="navbar-brand" style={{color: "white"}} href="/">My Finances App</a>
+                <a className="navbar-brand" style={{color: "black"}} href="/">My Finances App</a>
                 <button className="navbar-toggler bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
@@ -32,6 +32,9 @@ const NavBarForm = (propsRoute) => {
                     <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li className="nav-item">
                         <a className="nav-link active" href="/homepage">Home</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link active" href="/loginpage">Login</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link active" href="/" onClick={handleClickLogOut}>log out</a>
