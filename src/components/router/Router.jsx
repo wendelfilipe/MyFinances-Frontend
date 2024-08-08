@@ -15,12 +15,11 @@ import FiisHome from '../assets/FiisHome';
 import InterAssetsHome from '../assets/InterAssetsHome';
 import FixedHome from '../assets/FixedHome';
 import InitialPage from '../home/InitialPage';
+import GraphicHome from '../home/GraphicHome';
 
 
 const RouterComponent = (propsRoute) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(() => {
-        return localStorage.getItem("isLoggedIn") === "true";
-    })
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const handleLogout = () => {
         setIsLoggedIn(false);
@@ -43,6 +42,10 @@ const RouterComponent = (propsRoute) => {
         <Route 
             path="/loginpage" 
             element={<LoginPage onLogin={handleLogin} />} 
+        />
+        <Route
+            path='/graphic'
+            element={<GraphicHome/>}
         />
         <Route
             path='/createuserpage'

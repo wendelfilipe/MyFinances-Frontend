@@ -31,15 +31,15 @@ const HomePage = () => {
 
     
     useEffect (() => {
-        const fetchData = async () => {
+    //     const fetchData = async () => {
 
-            await getWallets();
+    //         await getWallets();
 
-            if(walletId > 0)
-                await getAssets();
+    //         if(walletId > 0)
+    //             await getAssets();
 
-        }
-       fetchData();
+    //     }
+    //    fetchData();
      }, []);
 
 
@@ -79,57 +79,60 @@ const HomePage = () => {
         document.cookie = `WalletIdCookie=${walletId};expires=${dataDeExpiracao}`;
 
         return (
-            <div className="container">
-                <div className="d-flex justify-content-center">
-                    <h2>Carteiras</h2>
-                </div>
-                <div className="card text-decoration-none" style={{ width: "100%" }}>
-                    <h5 className="card-header d-flex justify-content-between align-items-center">
-                        {walletName}
-                        <span className="text-end">
-                            Patrimônio: R$ {patrimonyString}   
-                        </span>
-                    </h5>
-                    <div className="card-body">
-                        <div className="row">
-                            <div className="col-md-6">
-                            <a className="text-decoration-none" href="/stockshome">
-                                <WalletForm 
-                                    nameAssets={"Ações"}
-                                    urlName={urlStocks}
-                                />
-                            </a>
+            <>
+                
+                <div className="container-wallet">
+                    <div className="d-flex justify-content-center">
+                        <h2>Carteiras</h2>
+                    </div>
+                    <div className="card text-decoration-none" style={{ width: "100%" }}>
+                        <h5 className="card-header d-flex justify-content-between align-items-center">
+                            {walletName}
+                            <span className="text-end">
+                                Patrimônio: R$ {patrimonyString}   
+                            </span>
+                        </h5>
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-md-6">
+                                <a className="text-decoration-none" href="/stockshome">
+                                    <WalletForm 
+                                        nameAssets={"Ações"}
+                                        urlName={urlStocks}
+                                    />
+                                </a>
+                                </div>
+                                <div className="col-md-6">
+                                <a className="text-decoration-none" href="/fiishome">
+                                    <WalletForm 
+                                        nameAssets={"Fundos imobiliários"}
+                                        urlName={urlFiis}
+                                    />
+                                </a>
+                                </div>
                             </div>
-                            <div className="col-md-6">
-                            <a className="text-decoration-none" href="/fiishome">
-                                <WalletForm 
-                                    nameAssets={"Fundos imobiliários"}
-                                    urlName={urlFiis}
-                                />
-                            </a>
-                            </div>
-                        </div>
-                        <div className="row mt-3">
-                            <div className="col-md-6">
-                            <a className="text-decoration-none" href="/fixedhome" onClick={isClickedFixed}>
-                                <WalletForm 
-                                    nameAssets={"Renda Fixa"}
-                                    urlName={urlFixed}
-                                />
-                            </a>
-                            </div>
-                            <div className="col-md-6">
-                            <a className="text-decoration-none" href="/interassetshome">
-                                <WalletForm 
-                                    nameAssets={"Ativos Internacionais"}
-                                    urlName={urlInterAssets}
-                                />
-                            </a>
+                            <div className="row mt-3">
+                                <div className="col-md-6">
+                                <a className="text-decoration-none" href="/fixedhome" onClick={isClickedFixed}>
+                                    <WalletForm 
+                                        nameAssets={"Renda Fixa"}
+                                        urlName={urlFixed}
+                                    />
+                                </a>
+                                </div>
+                                <div className="col-md-6">
+                                <a className="text-decoration-none" href="/interassetshome">
+                                    <WalletForm 
+                                        nameAssets={"Ativos Internacionais"}
+                                        urlName={urlInterAssets}
+                                    />
+                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 }
