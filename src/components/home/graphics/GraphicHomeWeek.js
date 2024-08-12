@@ -1,7 +1,7 @@
 import React from "react";
 import Chart from "react-apexcharts";
 
-const GraphicHome = () => {
+const GraphicHomeWeek = () => {
 
     const date = new Date();
     const dateFormated = date.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit'});
@@ -113,7 +113,7 @@ const GraphicHome = () => {
 
 
     return (
-        <div className="conteiner-graphic">
+      <div className="container-graphic">
         <div className="graphic">
             <Chart
               options={options}
@@ -126,6 +126,6 @@ const GraphicHome = () => {
     )
 }
 
-export default GraphicHome;
+export default GraphicHomeWeek;
 
 

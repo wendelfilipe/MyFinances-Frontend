@@ -15,7 +15,8 @@ import FiisHome from '../assets/FiisHome';
 import InterAssetsHome from '../assets/InterAssetsHome';
 import FixedHome from '../assets/FixedHome';
 import InitialPage from '../home/InitialPage';
-import GraphicHome from '../home/GraphicHome';
+import GraphicHomeWeek from '../home/graphics/GraphicHomeWeek';
+import GraphicHomeMonth from '../home/graphics/GraphicHomeMonth';
 
 
 const RouterComponent = (propsRoute) => {
@@ -44,8 +45,12 @@ const RouterComponent = (propsRoute) => {
             element={<LoginPage onLogin={handleLogin} />} 
         />
         <Route
-            path='/graphic'
-            element={<GraphicHome/>}
+            path='/graphicweek'
+            element={<GraphicHomeWeek/>}
+        />
+        <Route 
+            path='/graphicmonth'
+            element={<GraphicHomeMonth/>}
         />
         <Route
             path='/createuserpage'
