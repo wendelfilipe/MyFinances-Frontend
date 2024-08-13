@@ -1,0 +1,51 @@
+
+/* itens do formulario */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    
+}
+
+.form-header {
+    text-align: center;
+}
+
+.form-body {
+    position: relative;
+    margin: 0 auto;
+}
+
+.form-body input,
+.form-body input[type="text"] {
+    width: 300px;
+    border-radius: 5px;
+    border: 2px solid black;
+    margin: 15px 0;
+}
+
+.form-body input ::placeholder {
+    padding: 0 0 0 15px;
+}
+
+.form-body input:hover,
+.form-body input[type="text"]:hover{
+    border: 2px solid green;
+}
+
+.form-itens {
+    display: block;
+}
+
+.form-itens span {
+    color: red;
+}
+
+.btn-form {
+    text-align: center;
+
+}

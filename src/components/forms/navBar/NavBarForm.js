@@ -4,6 +4,8 @@ import api from "../../../api/Api";
 import { useNavigate } from "react-router-dom";
 import RouterComponent from "../../router/Router";
 
+import '../../../styles/navBar/navBar.css'
+
 
 const NavBarForm = (propsRoute) => {
     
@@ -37,7 +39,7 @@ const NavBarForm = (propsRoute) => {
                         <a className="nav-link active" href="/loginpage">Login</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link active" href="/" onClick={handleClickLogOut}>log out</a>
+                        <a className="nav-link active" href="/" onClick={handleClickLogOut}>Log out</a>
                     </li>
                     </ul>
                 </div>

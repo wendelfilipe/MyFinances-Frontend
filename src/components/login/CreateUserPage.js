@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/Api";
 
+import '../../styles/login/createUser.css'
+
 const CreateUserPage = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -9,10 +11,8 @@ const CreateUserPage = () => {
     let [ message , setMessage ] = useState();
 
     let user = {
-        name: name,
         email: email,
-        password: password,
-        sourcecreate: 1
+        password: password
     }
 
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const CreateUserPage = () => {
             
         else{
             
-            const responde = await api.post("user/PostCreateUserByWebAsync", user)
+            const responde = await api.post("token/CreateUser", user)
             debugger
             message = responde.data;
             setMessage(message);
@@ -42,72 +42,75 @@ const CreateUserPage = () => {
     }
 
     return(
-        <form>
-            <div className="mt-3 d-flex justify-content-center align-items-center">
-                    <div className="col-md-6">
-                        <div className="mb-3">
-                            <label
-                                htmlFor="email">
-                                    Name*
-                            </label>
-                            <input
-                                type="text"  
-                                onChange={(e => setName(e.target.value))} 
-                                id="name" 
-                                name="name" 
-                                className="form-control mt-2" 
-                                placeholder="Name" 
-                                value = {name}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label
-                                htmlFor="email">
-                                Email*
-                            </label>
-                            <input 
-                                type="text"
-                                onChange={(e => setEmail(e.target.value))}
-                                id="email"
-                                name="email"
-                                className="form-control mt-2" 
-                                placeholder="Email"
-                                value={email}
-                                required
-                                
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="password">
-                                Password*
-                            </label>
-                            <input 
-                                className="form-control mt-2"
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e => setPassword(e.target.value))}
-                                required
-                            />
-                        </div>
-                        <div className="mt-3">
-                            <button
-                                className="btn btn-outline-success me-2"
-                                onClick={handleClickCreateUser}>
-                                    Criar Usuario
-                            </button>
-                            <button 
-                                className="btn btn-outline-success"
-                                onClick={() => navigate("/")}>
-                                Cancelar
-                            </button>
-                        </div>
+        <div className="container">
+            <div className="form-body">
+                <div className="form-header">
+                    <h3>Criar Usuario</h3>
+                </div>
+                <form>
+                    <div className="form-itens">
+                        <label
+                            htmlFor="email">
+                                Name<span>*</span>
+                        </label>
+                        <input
+                            type="text"  
+                            onChange={(e => setName(e.target.value))} 
+                            id="name" 
+                            name="name"
+                            className="block"
+                            placeholder="Name" 
+                            value = {name}
+                            required
+                        />
+                    </div>
+                    <div className="form-itens">
+                        <label
+                            htmlFor="email">
+                            Email<span>*</span>
+                        </label>
+                        <input 
+                            type="email"
+                            onChange={(e => setEmail(e.target.value))}
+                            id="email"
+                            name="email"
+                            className="block"
+                            placeholder="Email"
+                            value={email}
+                            required
+                            
+                        />
+                    </div>
+                    <div className="form-itens">
+                        <label htmlFor="password">
+                            Password<span>*</span>
+                        </label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            className="block"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e => setPassword(e.target.value))}
+                            required
+                        />
+                    </div>
+                </form>
+                <div className="btn-form">
+                    <button
+                        className="btn btn-outline-success me-2"
+                        onClick={handleClickCreateUser}>
+                            Criar Usuario
+                    </button>
+                    <button 
+                        className="btn btn-outline-success"
+                        onClick={() => navigate("/")}>
+                        Cancelar
+                    </button>
                 </div>
             </div>
-        </form>
+        </div>
     )
 
 }
