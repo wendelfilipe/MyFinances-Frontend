@@ -5,14 +5,15 @@ import api from "../../api/Api";
 import '../../styles/login/createUser.css'
 
 const CreateUserPage = () => {
-    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     let [ message , setMessage ] = useState();
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     let user = {
         email: email,
-        password: password
+        password: password,
+        confirmPassword: confirmPassword
     }
 
     const navigate = useNavigate();
@@ -20,9 +21,6 @@ const CreateUserPage = () => {
     async function handleClickCreateUser(e){
         e.preventDefault();
 
-        if (name === ''){
-            alert("Campo Nome é obrigatório");
-        }
         if(email === '') {
             alert("Campo Email é obrigatório");
         }
@@ -48,23 +46,7 @@ const CreateUserPage = () => {
                     <h3>Criar Usuario</h3>
                 </div>
                 <form>
-                    <div className="form-itens">
-                        <label
-                            htmlFor="email">
-                                Name<span>*</span>
-                        </label>
-                        <input
-                            type="text"  
-                            onChange={(e => setName(e.target.value))} 
-                            id="name" 
-                            name="name"
-                            className="block"
-                            placeholder="Name" 
-                            value = {name}
-                            required
-                        />
-                    </div>
-                    <div className="form-itens">
+                    <div className="form-items">
                         <label
                             htmlFor="email">
                             Email<span>*</span>
@@ -78,10 +60,9 @@ const CreateUserPage = () => {
                             placeholder="Email"
                             value={email}
                             required
-                            
                         />
                     </div>
-                    <div className="form-itens">
+                    <div className="form-items">
                         <label htmlFor="password">
                             Password<span>*</span>
                         </label>
@@ -93,6 +74,21 @@ const CreateUserPage = () => {
                             placeholder="Password"
                             value={password}
                             onChange={(e => setPassword(e.target.value))}
+                            required
+                        />
+                    </div>
+                    <div className="form-items">
+                        <label htmlFor="confirmed">
+                            Confimar Senha<span>*</span>
+                        </label>
+                        <input 
+                            className="block"
+                            type="password"
+                            id="confirmed"
+                            name="confirmed"
+                            placeholder="Confirm password"
+                            value={confirmPassword}
+                            onChange={((e) => setConfirmPassword(e.target.value))}
                             required
                         />
                     </div>

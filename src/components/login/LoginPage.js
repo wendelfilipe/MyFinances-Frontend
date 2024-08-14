@@ -5,6 +5,8 @@ import VersionForm from '../forms/Version/VersionForm';
 import cryptoJs from 'crypto-js';
 import RouterComponent from '../router/Router';
 
+import '../../styles/login/loginPage.css';
+
 const LoginPage = (propsRoute) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -23,6 +25,11 @@ const LoginPage = (propsRoute) => {
     //     debugger
     // }
 
+    let user = {
+        email: email,
+        password: password
+    };
+
     
     async function handleClickLogin(e){
         e.preventDefault();
@@ -34,8 +41,8 @@ const LoginPage = (propsRoute) => {
             alert("Senha é obrigatório")
         }
         else{
-            const user = await api.get(`user/GetUserDTOByEmailAsync/${email}`)
-            if(email === user.data.email && password === user.data.password){
+            const response = await api.post("token/LoginUser", user)
+            if(email === response.data.email && password === response.data.password){
 
                 let dataDeExpiracao = new Date();
                 dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
@@ -57,41 +64,46 @@ const LoginPage = (propsRoute) => {
 
     return (
         <form>
-            <div className="d-flex justify-content-center align-items-center">
-                <div className="col-md-6">
-                    <div className="mb-3">
-                        <label
-                            htmlFor="email">
-                                Email*
-                        </label>
-                        <input
-                            type="text"  
-                            onChange={(e => setEmail(e.target.value))} 
-                            id="email" 
-                            name="email" 
-                            className="form-control mt-2" 
-                            placeholder="Email" 
-                            value = {email}
-                            required
-                        />
+            <div className="container">
+                <div className="form-container">
+                    <div className="form-header-login">
+                        <h3>Login</h3>
                     </div>
-                    <div className="mb-3">
-                        <label 
-                            htmlFor="password">
-                                Password*
-                        </label>
-                        <input 
-                            type="password" 
-                            value = {password} 
-                            onChange={e => setPassword(e.target.value)} 
-                            id="password" 
-                            name="password" 
-                            className="form-control mt-2" 
-                            placeholder="Password"
-                            required
-                        />
-                    </div>
-                    <div className="col-12">
+                    <form>
+                        <div className="form-login">
+                            <label
+                                htmlFor="email">
+                                    Email<span>*</span>
+                            </label>
+                            <input
+                                type="email"  
+                                onChange={(e => setEmail(e.target.value))} 
+                                id="email" 
+                                name="email" 
+                                className="block" 
+                                placeholder="Email" 
+                                value = {email}
+                                required
+                            />
+                        </div>
+                        <div className="form-login">
+                            <label 
+                                htmlFor="password">
+                                    Password<span>*</span>
+                            </label>
+                            <input 
+                                type="password" 
+                                value = {password} 
+                                onChange={e => setPassword(e.target.value)} 
+                                id="password" 
+                                name="password" 
+                                className="block" 
+                                placeholder="Password"
+                                required
+                            />
+                        </div>
+                    </form>
+                    <div className="form-btn">
                         <button 
                             className="btn btn-outline-success me-2" 
                             onClick={handleClickLogin}>

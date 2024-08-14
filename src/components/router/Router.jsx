@@ -20,7 +20,7 @@ import GraphicHomeMonth from '../home/graphics/GraphicHomeMonth';
 
 
 const RouterComponent = (propsRoute) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState();
 
     const handleLogout = () => {
         setIsLoggedIn(false);
@@ -34,11 +34,15 @@ const RouterComponent = (propsRoute) => {
     };
 
   return (
-    <div>
+    <>
         <Routes>
         <Route
             path='/'
             element={<InitialPage/>}
+        />
+        <Route
+            path='/createuserpage'
+            element={<CreateUserPage />}
         />
         <Route 
             path="/loginpage" 
@@ -46,15 +50,11 @@ const RouterComponent = (propsRoute) => {
         />
         <Route
             path='/graphicweek'
-            element={<GraphicHomeWeek/>}
+            element={isLoggedIn ? <GraphicHomeWeek/> : <Navigate to="/" />}
         />
         <Route 
             path='/graphicmonth'
-            element={<GraphicHomeMonth/>}
-        />
-        <Route
-            path='/createuserpage'
-            element={<CreateUserPage />}
+            element={isLoggedIn ? <GraphicHomeMonth/> : <Navigate to="/" />}
         />
         <Route
                 path="/homepage"
@@ -74,33 +74,33 @@ const RouterComponent = (propsRoute) => {
         />
         <Route
             path='/stockshome'
-            element={<StocksHome />}
+            element={isLoggedIn ? <StocksHome /> : <Navigate to="/" />}
         />
         <Route
             path='/fiishome'
-            element={<FiisHome />}
+            element={isLoggedIn ? <FiisHome /> : <Navigate to="/" />}
         />
         <Route
             path='/interassetshome'
-            element={<InterAssetsHome />}
+            element={isLoggedIn ? <InterAssetsHome/> : <Navigate to="/"/>}
         />
         <Route
             path='/fixedhome'
-            element={<FixedHome />}
+            element={isLoggedIn ? <FixedHome /> : <Navigate to="/"/>}
         />
         <Route
             path='/assetshomeform'
-            element={<AssetsHomeForm />}
+            element={isLoggedIn ? <AssetsHomeForm /> : <Navigate to="/"/>}
         />
         <Route
             path='/createFixed'
-            element={<CreateFixed />}
+            element={isLoggedIn ? <CreateFixed /> : <Navigate to="/"/>}
         />
         </Routes>
         <NavBarForm 
             onLogout={handleLogout}    
         />
-    </div>
+    </>
   );
 };
 
