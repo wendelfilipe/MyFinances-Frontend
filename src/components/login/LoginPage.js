@@ -42,11 +42,11 @@ const LoginPage = (propsRoute) => {
         }
         else{
             const response = await api.post("token/LoginUser", user)
-            if(email === response.data.email && password === response.data.password){
-
-                let dataDeExpiracao = new Date();
-                dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
-                document.cookie = `UserIdCookie=${user.data.id};expires=${dataDeExpiracao}`;
+            debugger
+            if(response.data != ""){
+                // let dataDeExpiracao = new Date();
+                // dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
+                // document.cookie = `UserIdCookie=${user.data.id};expires=${dataDeExpiracao}`;
                 propsRoute.onLogin();
 
                 navigate("/homepage");
