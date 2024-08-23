@@ -10,6 +10,9 @@ import '../../styles/login/loginPage.css';
 const LoginPage = (propsRoute) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const saveToken = (token) => {
+        localStorage.setItem('authToken', token)
+    }
 
     const navigate = useNavigate();
 
@@ -22,7 +25,6 @@ const LoginPage = (propsRoute) => {
 
     // function UpdateAssets(){
     //     const response  = api.get("assets/UpdateAssetsAsync")
-    //     debugger
     // }
 
     let user = {
@@ -42,11 +44,20 @@ const LoginPage = (propsRoute) => {
         }
         else{
             const response = await api.post("token/LoginUser", user)
+            const token = response.data.token;
+
+            const responde = await fetch(`${api}token/GetUserId`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            const userId = await responde.json();
+            let dataDeExpiracao = new Date();
+            dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
+            document.cookie = `UserIdCookie=${userId};expires=${dataDeExpiracao}`;
             debugger
             if(response.data != ""){
-                // let dataDeExpiracao = new Date();
-                // dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
-                // document.cookie = `UserIdCookie=${user.data.id};expires=${dataDeExpiracao}`;
                 propsRoute.onLogin();
 
                 navigate("/homepage");

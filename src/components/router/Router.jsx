@@ -20,7 +20,10 @@ import GraphicHomeMonth from '../home/graphics/GraphicHomeMonth';
 
 
 const RouterComponent = (propsRoute) => {
-    const [isLoggedIn, setIsLoggedIn] = useState();
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        let isLoggedIn = localStorage.getItem("isLoggedIn");
+        return isLoggedIn === "true" ? true : false;
+    });
 
     const handleLogout = () => {
         setIsLoggedIn(false);

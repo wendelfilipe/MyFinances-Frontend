@@ -31,7 +31,6 @@ const CreateUserPage = () => {
         else{
             
             const responde = await api.post("token/CreateUser", user)
-            debugger
             message = responde.data;
             setMessage(message);
 

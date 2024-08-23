@@ -29,8 +29,6 @@ const GraphicHomeWeek = () => {
     const date6 = new Date()
     date6.setDate(date6.getDate() -6);
     const dateFormated6 = date6.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit'});
-    debugger
-
     const options = {
             chart: {
               height: 350,

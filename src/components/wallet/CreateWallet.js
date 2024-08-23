@@ -4,6 +4,7 @@ import api from "../../api/Api";
 const CreateWallet = () => {
 
     const [name, setName] = useState('');
+    
     let [message, setMessage ] = useState();
 
     function getCookies() {
@@ -28,7 +29,6 @@ const CreateWallet = () => {
         };
 
         const reponse = await api.post("wallet/PostWalletDTOAsync", wallet);
-        debugger
         message = reponse.data;
         setMessage(message);
 
