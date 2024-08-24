@@ -11,8 +11,8 @@ const NavBarForm = (propsRoute) => {
     
 
     async function handleClickLogOut(){
-        document.cookie = 'UserIdCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = 'WalletIdCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'UserIdCookie=; expires=Thu, 01 Jan 2023 00:00:00 UTC; path=/;';
+        document.cookie = 'WalletIdCookie=; expires=Thu, 01 Jan 2023 00:00:00 UTC; path=/;';
         propsRoute.onLogout();
         
     }

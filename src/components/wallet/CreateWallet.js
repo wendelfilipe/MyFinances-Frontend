@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import api from "../../api/Api";
+import { useNavigate } from "react-router-dom";
 
 const CreateWallet = () => {
 
     const [name, setName] = useState('');
     
     let [message, setMessage ] = useState();
+
+    const navigate = useNavigate();
 
     function getCookies() {
         const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
@@ -19,9 +22,9 @@ const CreateWallet = () => {
     // Exemplo de como usar a função getCookies()
     const cookie = getCookies();
     const userIdString = cookie.UserIdCookie;
-    const userId = parseInt(userIdString, 10);
+    const userId = userIdString;
 
-    async function getUserIdAndCriarWallet(){
+    async function getUserIdAndCreateWallet(){
         const wallet = {
             name: name,
             userid: userId,
@@ -31,7 +34,6 @@ const CreateWallet = () => {
         const reponse = await api.post("wallet/PostWalletDTOAsync", wallet);
         message = reponse.data;
         setMessage(message);
-
         alert(message);
     }
     
@@ -42,7 +44,7 @@ const CreateWallet = () => {
             <div>
             <div className="input-group mb-3">
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Name da Carteira" aria-label="Recipient's username" aria-describedby="button-addon2"/>
-                <button className="btn btn-outline-secondary" onClick={getUserIdAndCriarWallet} type="button" id="button-addon2">Criar Carteira</button>
+                <button className="btn btn-outline-secondary" onClick={getUserIdAndCreateWallet} type="button" id="button-addon2">Criar Carteira</button>
             </div>
             </div>
             <div>

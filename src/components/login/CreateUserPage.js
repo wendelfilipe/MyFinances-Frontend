@@ -33,8 +33,9 @@ const CreateUserPage = () => {
             const responde = await api.post("token/CreateUser", user)
             message = responde.data;
             setMessage(message);
-
             alert(message)
+
+            navigate("/loginpage");
         }
     }
 

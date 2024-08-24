@@ -43,21 +43,21 @@ const LoginPage = (propsRoute) => {
             alert("Senha é obrigatório")
         }
         else{
-            const response = await api.post("token/LoginUser", user)
-            const token = response.data.token;
+            const response1 = await api.post("token/LoginUser", user)
+            const token = response1.data.token;
 
-            const responde = await fetch(`${api}token/GetUserId`, {
+            const response2 = await fetch("http://localhost:5001/api/token/GetUserId", {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            const userId = await responde.json();
+            const userId = await response2.text();
             let dataDeExpiracao = new Date();
             dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
             document.cookie = `UserIdCookie=${userId};expires=${dataDeExpiracao}`;
             debugger
-            if(response.data != ""){
+            if(response1.data != ""){
                 propsRoute.onLogin();
 
                 navigate("/homepage");
