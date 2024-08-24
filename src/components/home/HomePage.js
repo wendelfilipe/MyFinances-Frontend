@@ -25,27 +25,29 @@ const HomePage = () => {
     }, {});
    
     const userIdString = cookies.UserIdCookie;
-    const userId = parseInt(userIdString, 10);
+    const userId = userIdString;
     const walletIdString = cookies.WalletIdCookie;
     const walletId = parseInt(walletIdString, 10);
+    debugger
 
     
     useEffect (() => {
-    //     const fetchData = async () => {
+        const fetchData = async () => {
 
-    //         await getWallets();
+            await getWallets();
 
-    //         if(walletId > 0)
-    //             await getAssets();
+            if(walletId > 0)
+                await getAssets();
 
-    //     }
-    //    fetchData();
+        }
+       fetchData();
      }, []);
 
 
     async function getWallets(){
         wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
         setWallets(wallets.data)
+        debugger
     }
 
     async function getAssets(){

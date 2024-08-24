@@ -8,8 +8,6 @@ const CreateWallet = () => {
     
     let [message, setMessage ] = useState();
 
-    const navigate = useNavigate();
-
     function getCookies() {
         const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
             const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -30,6 +28,7 @@ const CreateWallet = () => {
             userid: userId,
             sourcecreate: 1 
         };
+        debugger
 
         const reponse = await api.post("wallet/PostWalletDTOAsync", wallet);
         message = reponse.data;
