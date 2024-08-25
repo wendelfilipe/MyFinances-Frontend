@@ -56,7 +56,6 @@ const LoginPage = (propsRoute) => {
             let dataDeExpiracao = new Date();
             dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
             document.cookie = `UserIdCookie=${userId};expires=${dataDeExpiracao}`;
-            debugger
             if(response1.data != ""){
                 propsRoute.onLogin();
 

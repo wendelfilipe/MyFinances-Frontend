@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import api from "../../api/Api";
-import { useNavigate } from "react-router-dom";
 
 const CreateWallet = () => {
 
@@ -28,7 +27,6 @@ const CreateWallet = () => {
             userid: userId,
             sourcecreate: 1 
         };
-        debugger
 
         const reponse = await api.post("wallet/PostWalletDTOAsync", wallet);
         message = reponse.data;

@@ -33,11 +33,13 @@ const StocksHome = () => {
         userAssetsStocks = stocks.userAssetsStock
         setUserStocks(userStocks)
         setUserAssetsStocks(userAssetsStocks)
+        debugger
     }
 
     async function getAssets(){
         totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
         setTotalAssets(totalAssets.data)
+        debugger
     }
 
 

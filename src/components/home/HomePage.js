@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/Api";
-import NavBarForm from "../forms/navBar/NavBarForm";
 import WalletForm from "../forms/wallet/WalletForm";
-import { Col, Container, Row } from "react-bootstrap";
-import CreateAssets from "../assets/CreateAssets";
 
 const HomePage = () => {
     let [wallets, setWallets ] = useState([]);
@@ -28,7 +25,6 @@ const HomePage = () => {
     const userId = userIdString;
     const walletIdString = cookies.WalletIdCookie;
     const walletId = parseInt(walletIdString, 10);
-    debugger
 
     
     useEffect (() => {
@@ -47,7 +43,6 @@ const HomePage = () => {
     async function getWallets(){
         wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
         setWallets(wallets.data)
-        debugger
     }
 
     async function getAssets(){
