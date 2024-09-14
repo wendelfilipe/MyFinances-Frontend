@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import api  from '../../api/Api'
 import { useNavigate } from 'react-router-dom';
 import VersionForm from '../forms/Version/VersionForm';
-import cryptoJs from 'crypto-js';
-import RouterComponent from '../router/Router';
 
 import '../../styles/login/loginPage.css';
 
@@ -44,22 +42,31 @@ const LoginPage = (propsRoute) => {
         }
         else{
             const response1 = await api.post("token/LoginUser", user)
-            const token = response1.data.token;
 
-            const response2 = await fetch("http://localhost:5001/api/token/GetUserId", {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
+            if(response1.status === 200)
+            {
+                const token = response1.data.token;
+                
+                const response2 = await fetch("http://localhost:5001/api/token/GetUserId", {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                });
+
+                if(response2.status === 200 && response2.text() != "")
+                {
+                    const userId = await response2.text();
+
+                    let dataDeExpiracao = new Date();
+
+                    dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
+                    document.cookie = `UserIdCookie=${userId};expires=${dataDeExpiracao}`;
+        
+                    propsRoute.onLogin();
+        
+                    navigate("/homepage");
                 }
-            });
-            const userId = await response2.text();
-            let dataDeExpiracao = new Date();
-            dataDeExpiracao.setHours(dataDeExpiracao.getHours() + 24);
-            document.cookie = `UserIdCookie=${userId};expires=${dataDeExpiracao}`;
-            if(response1.data != ""){
-                propsRoute.onLogin();
-
-                navigate("/homepage");
             }
             else{
                 alert("Email ou senha invalida");
