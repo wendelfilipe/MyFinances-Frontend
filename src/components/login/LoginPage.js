@@ -8,12 +8,7 @@ import '../../styles/login/loginPage.css';
 const LoginPage = (propsRoute) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const saveToken = (token) => {
-        localStorage.setItem('authToken', token)
-    }
-
     const navigate = useNavigate();
-
     // useEffect(() => {
     //     const fetchData = async () => {
     //         await UpdateAssets();
@@ -46,6 +41,8 @@ const LoginPage = (propsRoute) => {
             if(response1.status === 200)
             {
                 const token = response1.data.token;
+
+                localStorage.setItem('authToken', token)
                 
                 const response2 = await fetch("http://localhost:5001/api/token/GetUserId", {
                     method: 'GET',
@@ -53,8 +50,8 @@ const LoginPage = (propsRoute) => {
                         'Authorization': `Bearer ${token}`,
                     }
                 });
-
-                if(response2.status === 200 && response2.text() != "")
+                
+                if(response2.ok)
                 {
                     const userId = await response2.text();
 

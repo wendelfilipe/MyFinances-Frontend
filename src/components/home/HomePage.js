@@ -43,6 +43,7 @@ const HomePage = () => {
     async function getWallets(){
         wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
         setWallets(wallets.data)
+        debugger
     }
 
     async function getAssets(){

@@ -27,7 +27,7 @@ const InitialPage = () => {
                         My Finances app
                     </div>
                     <figure>
-                        <img src="img/AppHomePage.png" alt="App img"></img>
+                        <img src="" alt="App img"></img>
                     </figure>
                     <div className="block">
                         <a href="https://www.google.com" target="_blank" rel="noreferrer"><img src="img/google_play_logo.png"></img></a>

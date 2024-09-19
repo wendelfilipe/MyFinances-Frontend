@@ -6,6 +6,7 @@ const FiisHome = () => {
     let [ userAssetsFiis, setUserAssetsFiis ] = useState([]);
     let [ userFiis, setUserFiis ] = useState([]);
     let [ totalAssets, setTotalAssets ] = useState([]);
+    let token = localStorage.getItem('authToken');
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -27,17 +28,49 @@ const FiisHome = () => {
     }, []);
 
     async function getFiis(){
-        const response = await api.get(`fiis/GetAllFiisByWalletIdAsync/${walletId}`)
-        let fiis = response.data
-        userFiis = fiis.fiiAssets
-        userAssetsFiis = fiis.userFiis
-        setUserFiis(userFiis)
-        setUserAssetsFiis(userAssetsFiis)
+       
+        try {
+            const response = await fetch(`http://localhost:5001/api/fiis/GetAllFiisByWalletIdAsync/${walletId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.statusText}`);
+            }
+    
+            const fiis = await response.json();  // Converte o corpo da resposta para JSON
+            userFiis = fiis.fiiAssets;     // Obtém os fiis do usuário
+            userAssetsFiis = fiis.userFiis; // Obtém os assets fiis do usuário
+    
+            setUserFiis(userFiis);                // Atualiza o estado com os fiis
+            setUserAssetsFiis(userAssetsFiis);    // Atualiza o estado com os assets fiis
+        } catch (error) {
+            console.error('Erro ao buscar FIIs:', error);
+        }
     }
 
     async function getAssets(){
-        totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
-        setTotalAssets(totalAssets.data)
+        try {
+            const response = await fetch(`http://localhost:5001/api/assets/GetTotalAssetByWalletIdAsync/${walletId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.statusText}`);
+            }
+    
+            const assets = await response.json();  // Converte o corpo da resposta para JSON
+            setTotalAssets(assets)
+
+        } catch (error) {
+            console.error('Erro ao buscar FIIs:', error);
+        }
     }
 
     return(

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import AssetsForm from "../forms/assets/AssetsForm";
 import FixedCreateForm from "../forms/assets/FixedCreateForm";
 
 const CreateFixed = () => {

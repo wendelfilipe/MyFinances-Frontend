@@ -6,6 +6,7 @@ const StocksHome = () => {
     let [ userStocks, setUserStocks ] = useState([]);
     let [ userAssetsStocks, setUserAssetsStocks ] = useState([]);
     let [ totalAssets, setTotalAssets ] = useState([]);
+    let token = localStorage.getItem('authToken')
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -27,19 +28,49 @@ const StocksHome = () => {
     }, []);
 
     async function getStocks(){
-        const response = await api.get(`stocks/GetAllStocksByWalletIdAsync/${walletId}`)
-        let stocks = response.data
-        userStocks = stocks.stockAssets
-        userAssetsStocks = stocks.userAssetsStock
-        setUserStocks(userStocks)
-        setUserAssetsStocks(userAssetsStocks)
-        debugger
+
+        try {
+            const response = await fetch(`http://localhost:5001/api/fiis/GetAllFiisByWalletIdAsync/${walletId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.statusText}`);
+            }
+    
+            const stocks = await response.json();  // Converte o corpo da resposta para JSON
+            userStocks = stocks.stocksAssets;     // Obtém os stocks do usuário
+            userAssetsStocks = stocks.userAssetsStocks; // Obtém os assets stocks do usuário
+    
+            setUserStocks(userStocks);                // Atualiza o estado com os stocks
+            setUserAssetsStocks(userAssetsStocks);    // Atualiza o estado com os assets stocks
+        } catch (error) {
+            console.error('Erro ao buscar Stocks:', error);
+        }
     }
 
     async function getAssets(){
-        totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
-        setTotalAssets(totalAssets.data)
-        debugger
+        try {
+            const response = await fetch(`http://localhost:5001/api/assets/GetTotalAssetByWalletIdAsync/${walletId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.statusText}`);
+            }
+    
+            const assets = await response.json();  // Converte o corpo da resposta para JSON
+            setTotalAssets(assets)
+
+        } catch (error) {
+            console.error('Erro ao buscar Stocks:', error);
+        }
     }
 
 

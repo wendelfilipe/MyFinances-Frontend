@@ -4,8 +4,9 @@ import api from "../../api/Api";
 
 const InterAssetsHome = () => {
     let [ userAssetsInterAssets, setUserAssetsInterAssets ] = useState([]);
-    let [ InterAssets, setInterAssets ] = useState([]);
+    let [ interAssets, setInterAssets ] = useState([]);
     let [ totalAssets, setTotalAssets ] = useState([]);
+    let token = localStorage.getItem('authToken')
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -27,17 +28,54 @@ const InterAssetsHome = () => {
     }, []);
 
     async function getInterAssets(){
-        const response = await api.get(`internacionalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`)
-        let interAssetsData = response.data
-        InterAssets = interAssetsData.interAssets
-        userAssetsInterAssets = interAssetsData.userInterAssets
-        setInterAssets(InterAssets)
-        setUserAssetsInterAssets(userAssetsInterAssets)
+        // const response = await api.get(`internacionalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`)
+        // let interAssetsData = response.data
+        // InterAssets = interAssetsData.interAssets
+        // userAssetsInterAssets = interAssetsData.userInterAssets
+        // setInterAssets(InterAssets)
+        // setUserAssetsInterAssets(userAssetsInterAssets)
+        try {
+            const response = await fetch(`http://localhost:5001/api/internacionalAssets/GetAllInterAssetsByWalletIdAsync/${walletId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.statusText}`);
+            }
+    
+            const inter = await response.json();  // Converte o corpo da resposta para JSON
+            interAssets = inter.interAssets;     // Obtém os international do usuário
+            userAssetsInterAssets = inter.userInterAssets; // Obtém os assets international do usuário
+    
+            setInterAssets(interAssets);                // Atualiza o estado com os international
+            setUserAssetsInterAssets(userAssetsInterAssets);    // Atualiza o estado com os assets international
+        } catch (error) {
+            console.error('Erro ao buscar Stocks:', error);
+        }
     }
 
     async function getAssets(){
-        totalAssets = await api.get(`assets/GetTotalAssetByWalletIdAsync/${walletId}`)
-        setTotalAssets(totalAssets.data)
+        try {
+            const response = await fetch(`http://localhost:5001/api/assets/GetTotalAssetByWalletIdAsync/${walletId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.statusText}`);
+            }
+    
+            const assets = await response.json();  // Converte o corpo da resposta para JSON
+            setTotalAssets(assets)
+
+        } catch (error) {
+            console.error('Erro ao buscar Ativos Internacionais:', error);
+        }
     }
 
     return(
@@ -49,7 +87,7 @@ const InterAssetsHome = () => {
                 <div className="card-body">
                 { userAssetsInterAssets.length > 0
                         ?   <AssetsHomeForm 
-                                setUserAssetsToForm={InterAssets}
+                                setUserAssetsToForm={interAssets}
                                 setAllUserAssetsToForm={userAssetsInterAssets}
                                 setTotalAssetsToForm={totalAssets}
                             />
