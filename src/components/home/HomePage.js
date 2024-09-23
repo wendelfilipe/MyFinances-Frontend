@@ -14,6 +14,7 @@ const HomePage = () => {
         let isClicked = localStorage.getItem("isClicked");
         return isClicked ? isClicked : false;
     })
+    let token = localStorage.getItem('authToken');
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -41,9 +42,15 @@ const HomePage = () => {
 
 
     async function getWallets(){
-        wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
-        setWallets(wallets.data)
-        debugger
+        const response = await fetch(`http://localhost:5001/api/wallet/GetAllWalletDTOByUserIDAsync/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer${token}`
+            }
+        })
+        // wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
+        // setWallets(wallets.data)
+        // debugger
     }
 
     async function getAssets(){
@@ -54,7 +61,7 @@ const HomePage = () => {
 
     function isClickedFixed(){
         isClicked = true;
-        setIsClicked(isClicked)    
+        setIsClicked(isClicked)
     }
 
     if(wallets.length === 0){
