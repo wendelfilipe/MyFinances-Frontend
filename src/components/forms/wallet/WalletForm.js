@@ -8,6 +8,7 @@ const WalletForm = (props) => {
         return hasPerCent !== null ? parseInt(hasPerCent) : 0;
     });
     let url = props.urlName
+    const token = localStorage.getItem('authToken')
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -30,7 +31,12 @@ const WalletForm = (props) => {
 
 
     async function getPerCent(){
-        const reponse = await api.get(`${url}${walletId}`)
+        const reponse = await fetch(`http://localhost:5001/api/${url}${walletId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         perCent = reponse.data;
         setPerCent(perCent)
     }

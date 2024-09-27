@@ -50,7 +50,6 @@ const LoginPage = (propsRoute) => {
                         'Authorization': `Bearer ${token}`,
                     }
                 });
-                
                 if(response2.ok)
                 {
                     const userId = await response2.text();

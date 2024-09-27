@@ -30,7 +30,7 @@ const StocksHome = () => {
     async function getStocks(){
 
         try {
-            const response = await fetch(`http://localhost:5001/api/fiis/GetAllFiisByWalletIdAsync/${walletId}`, {
+            const response = await fetch(`http://localhost:5001/api/stocks/GetAllStocksByWalletIdAsync/${walletId}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -42,9 +42,8 @@ const StocksHome = () => {
             }
     
             const stocks = await response.json();  // Converte o corpo da resposta para JSON
-            userStocks = stocks.stocksAssets;     // Obtém os stocks do usuário
-            userAssetsStocks = stocks.userAssetsStocks; // Obtém os assets stocks do usuário
-    
+            userStocks = stocks.stockAssets;     // Obtém os stocks do usuário
+            userAssetsStocks = stocks.userAssetsStock; // Obtém os assets stocks do usuário
             setUserStocks(userStocks);                // Atualiza o estado com os stocks
             setUserAssetsStocks(userAssetsStocks);    // Atualiza o estado com os assets stocks
         } catch (error) {

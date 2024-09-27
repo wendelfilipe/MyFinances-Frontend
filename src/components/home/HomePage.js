@@ -14,7 +14,7 @@ const HomePage = () => {
         let isClicked = localStorage.getItem("isClicked");
         return isClicked ? isClicked : false;
     })
-    let token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('authToken');
 
     const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
         const [name, value] = cookie.split('=').map(cookie => cookie.trim());
@@ -45,18 +45,31 @@ const HomePage = () => {
         const response = await fetch(`http://localhost:5001/api/wallet/GetAllWalletDTOByUserIDAsync/${userId}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer${token}`
+                'Authorization': `Bearer ${token}`
             }
         })
+        wallets = await response.json();
+        setWallets(wallets)
+
         // wallets = await api.get(`wallet/GetAllWalletDTOByUserIDAsync/${userId}`)
         // setWallets(wallets.data)
         // debugger
     }
 
     async function getAssets(){
-        let patrimony = await api.get(`assets/GetPatrimonyAsync/${walletId}`);
-        patrimonyString = patrimony.data.toFixed(2);
-        setPatrimonyString(patrimonyString);
+        const response = await fetch(`http://localhost:5001/api/assets/GetPatrimonyAsync/${walletId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const result = await response.json();
+        patrimonyString = result
+        setPatrimonyString(patrimonyString.toFixed(2))
+
+        // let patrimony = await api.get(`assets/GetPatrimonyAsync/${walletId}`);
+        // patrimonyString = patrimony.data.toFixed(2);
+        // setPatrimonyString(patrimonyString);
     }
 
     function isClickedFixed(){
